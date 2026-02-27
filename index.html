@@ -1,1030 +1,1669 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>FinJet — Home</title>
-
-    <!-- Bootstrap (optional, used for grid + utilities) -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-        /* ---------------- Reset / Base ---------------- */
-        :root {
-            --primary: #d90429; /* Red */
-            --primary-dark: #a0031f; /* Darker Red */
-            --navy: #071025; /* Navy Blue */
-            --ink: #0f1724; /* Deep Navy/Black */
-            --muted: #9aa3b2;
-            --card-bg: #0f1724; /* deep card bg for premium dark feel */
-            --glass: rgba(255,255,255,0.04);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0
-        }
-
-        html, body {
-            height: 100%;
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            color: #eef2f7;
-            background: var(--navy);
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none
-        }
-
-        img {
-            max-width: 100%;
-            display: block
-        }
-
-        /* ------------- Video Background ------------- */
-        .hero-viewport {
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            padding-top: 80px; /* space for fixed navbar */
-        }
-
-        .bg-video {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 0;
-            filter: brightness(0.45);
-        }
-
-        .overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, rgba(2,6,23,0.55), rgba(0,0,0,0.65));
-            z-index: 1;
-        }
-
-        /* ------------- Navbar ------------- */
-        .topbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 72px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 28px;
-            background: #fff !important; /* Force solid white */
-            z-index: 40;
-            border-bottom: 1px solid #e5e7eb;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-            .brand .logo {
-                width: 200px;
-                height: 100px;
-                border-radius: 8px;
-                background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-                padding: 6px;
-            }
-
-            .brand .tag {
-                color: var(--primary);
-                font-weight: 700;
-                font-size: 14px;
-                letter-spacing: 0.2px;
-            }
-
-        /* container that will collapse on smaller screens */
-        .nav-container {
-            display: flex;
-            align-items: center;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 18px;
-            align-items: center;
-        }
-
-            .nav-links a {
-                 color: #111 !important; /* Force black text */
-                font-weight: 600;
-                font-size: 14px;
-                padding: 8px 10px;
-                border-radius: 6px;
-                transition: all .15s;
-                background: transparent !important;
-            }
-
-                .nav-links a:hover {
-                     background: #f3f3f3 !important;
-                     color: var(--primary) !important;
-                }
-
-        /* toggler button (visible on < large) */
-        .nav-toggle {
-            display: none; /* shown via responsive rule */
-            background: transparent;
-            border: none;
-            padding: 6px;
-            cursor: pointer;
-            color: #111;
-            height: 44px;
-            width: 44px;
-            border-radius: 8px;
-        }
-
-        .nav-toggle svg {
-            width: 22px;
-            height: 22px;
-            display: block;
-        }
-
-        /* small / medium screens: use collapse behavior */
-        @media (max-width:991px) {
-            .nav-toggle {
-                display: block;
-            }
-
-            /* rely on bootstrap collapse class toggling .show; default hidden */
-            .nav-container.collapse {
-                display: none;
-            }
-
-            /* when expanded show as column menu anchored below the topbar */
-            .nav-container.collapse.show {
-                display: flex;
-                position: absolute;
-                top: 72px;
-                left: 0;
-                right: 0;
-                background: #fff;
-                padding: 12px 18px;
-                box-shadow: 0 8px 20px rgba(0,0,0,0.06);
-                border-bottom: 1px solid #e5e7eb;
-                z-index: 39;
-                flex-direction: column;
-                align-items: flex-end; /* align link items to right side of the screen */
-                gap: 8px;
-            }
-
-            .nav-links {
-                flex-direction: column;
-                gap: 10px;
-                align-items: flex-end;
-            }
-
-            .brand .logo {
-                width: 110px
-            }
-        }
-
-        /* large screens: always show inline nav and hide toggler */
-        @media (min-width:992px) {
-            .nav-toggle {
-                display: none !important;
-            }
-
-            .nav-container {
-                position: static !important;
-                display: flex !important;
-                flex-direction: row !important;
-            }
-
-            .nav-links {
-                flex-direction: row;
-                gap: 18px;
-            }
-        }
-
-        /* small screens: stack nav (legacy rules preserved) */
-        @media (max-width:900px) {
-            .nav-links {
-                gap: 10px;
-                flex-wrap: wrap
-            }
-
-            .brand .logo {
-                width: 110px
-            }
-        }
-
-        /* ------------- Hero Content ------------- */
-        .hero-content {
-            position: relative;
-            z-index: 5;
-            max-width: 1100px;
-            padding: 48px 20px;
-            text-align: center;
-            color: #fff;
-        }
-
-            .hero-content h1 {
-                font-size: 40px;
-                line-height: 1.05;
-                margin-bottom: 14px;
-                color: #fff;
-                font-weight: 700;
-                text-shadow: 0 6px 30px rgba(0,0,0,0.6)
-            }
-
-            .hero-content p {
-                color: #e7edf6;
-                opacity: 0.9;
-                margin-bottom: 22px;
-                font-size: 18px;
-            }
-
-        .hero-cta {
-            display: inline-flex;
-            gap: 12px;
-            align-items: center;
-        }
-
-        .btn-primary-gold {
-            background: linear-gradient(180deg,var(--primary), var(--primary-dark));
-            color: #fff;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 10px;
-            font-weight: 800;
-            box-shadow: 0 10px 30px rgba(217,4,41,0.12);
-        }
-
-            .btn-primary-gold:hover {
-                transform: translateY(-2px)
-            }
-
-        /* ------------- Features Section ------------- */
-        .features {
-            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-            padding: 60px 20px;
-            color: #ecf3fb;
-        }
-
-            .features .wrap {
-                max-width: 1200px;
-                margin: 0 auto
-            }
-
-            .features h2 {
-                color: var(--primary);
-                font-size: 24px;
-                margin-bottom: 18px;
-                text-align: center
-            }
-
-        .feature-cards {
-            display: flex;
-            gap: 22px;
-            justify-content: center;
-            align-items: stretch;
-            flex-wrap: wrap;
-            margin-top: 18px;
-        }
-
-        .feature-card {
-            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-            border: 1px solid rgba(255,255,255,0.03);
-            padding: 22px;
-            border-radius: 12px;
-            width: 260px;
-            box-shadow: 0 8px 30px rgba(4,6,14,0.5);
-            text-align: left;
-        }
-
-            .feature-card h3 {
-                color: #fff;
-                font-size: 18px;
-                margin-bottom: 8px
-            }
-
-            .feature-card p {
-                color: var(--muted);
-                font-size: 14px;
-                line-height: 1.4
-            }
-
-        /* ------------- Partners ------------- */
-        .partners {
-            padding: 48px 18px
-        }
-
-            .partners .wrap {
-                max-width: 1200px;
-                margin: 0 auto
-            }
-
-            .partners h2 {
-                color: var(--primary);
-                text-align: center;
-                margin-bottom: 20px
-            }
-
-        .logo-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 4 columns */
-            gap: 18px;
-            align-items: center;
-            justify-items: center;
-            padding: 12px;
-            background: transparent;
-        }
-
-            .logo-grid a {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 100%;
-                max-width: 160px; /* prevents extremely large boxes on wide screens */
-                height: 84px; /* fixed box height so every tile aligns */
-                padding: 8px;
-                border-radius: 8px;
-                background: white;
-                border: 1px white;
-                box-sizing: border-box;
-            }
-
-            .logo-grid img {
-                max-width: 100%;
-                max-height: 60px; /* emblem height; keeps aspect ratio */
-                object-fit: contain;
-                display: block;
-            }
-
-        /* Responsive: collapse to 2 columns on narrow screens */
-        @media (max-width: 900px) {
-            .logo-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
-            }
-
-            .logo-grid a {
-                max-width: 220px;
-                height: 72px;
-            }
-
-            .logo-grid img {
-                max-height: 48px;
-            }
-        }
-
-        /* ------------- EMI Section ------------- */
-        .emi-section {
-            padding: 52px 18px;
-            background: linear-gradient(180deg, rgba(0,0,0,0.32), rgba(0,0,0,0.2))
-        }
-
-        .emi-wrap {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: flex;
-            gap: 28px;
-            align-items: center;
-            flex-wrap: wrap;
-            justify-content: center
-        }
-
-        .emi-box {
-            width: 380px;
-            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-            padding: 22px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.03);
-        }
-
-            .emi-box label {
-                display: block;
-                font-weight: 700;
-                color: #fff;
-                margin-top: 12px;
-                margin-bottom: 6px;
-                font-size: 14px
-            }
-
-            .emi-box input[type=number], .emi-box input[type=text] {
-                width: 100%;
-                padding: 10px;
-                border-radius: 8px;
-                border: 1px solid rgba(255,255,255,0.06);
-                background: transparent;
-                color: #fff;
-            }
-
-        .emi-vid {
-            width: 420px;
-            height: 300px;
-            border-radius: 12px;
-            object-fit: cover;
-            border: 1px solid rgba(255,255,255,0.04);
-            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-        }
-
-        /* ------------- Services ------------- */
-        .services {
-            padding: 48px 18px
-        }
-
-            .services h2 {
-                color: var(--primary);
-                text-align: center;
-                margin-bottom: 20px
-            }
-
-        .services-grid {
-            display: grid;
-            gap: 20px;
-            max-width: 1100px;
-            margin: 0 auto;
-
-            /* responsive automatic columns:
-               - minimum column width 180px so 5 items can fit on wide screens,
-               - each column grows equally (1fr) */
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        }
-
-        /* Force 5 equal columns on very wide viewports (optional, guarantees single-row for 5 items) */
-        @media (min-width: 1400px) {
-            .services-grid {
-                grid-template-columns: repeat(5, 1fr);
-            }
-        }
-
-        /* medium screens -> 2 columns */
-        @media (max-width: 1100px) {
-            .services-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        /* small screens -> 1 column */
-        @media (max-width: 600px) {
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .service-card {
-            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.03)
-        }
-
-            .service-card h3 {
-                color: #fff;
-                margin-bottom: 8px
-            }
-
-            .service-card p {
-                color: var(--muted);
-                font-size: 14px;
-                line-height: 1.5
-            }
-
-        /* ------------- Reviews ------------- */
-        .reviews {
-            padding: 36px 18px;
-            background: linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.06))
-        }
-
-            .reviews .wrap {
-                max-width: 1100px;
-                margin: 0 auto
-            }
-
-        .review-track {
-            display: flex;
-            gap: 14px;
-            overflow-x: auto;
-            padding: 18px 6px
-        }
-
-        .review-card {
-            min-width: 260px;
-            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-            padding: 18px;
-            border-radius: 10px;
-            border: 1px solid rgba(255,255,255,0.03)
-        }
-
-            .review-card p {
-                color: var(--muted);
-                margin-top: 8px
-            }
-
-        /* ------------- Map ------------- */
-        .map {
-            padding: 30px 18px
-        }
-
-            .map iframe {
-                width: 100%;
-                height: 420px;
-                border-radius: 10px;
-                border: 0
-            }
-
-        /* ============================================
-           FOOTER — fully rebuilt for mobile
-           ============================================ */
-        .site-footer {
-            padding: 40px 0 0;
-            background: #050713;
-            color: #cbd5e1;
-            border-top: 1px solid rgba(217,4,41,0.08);
-            font-size: 14px;
-        }
-
-        .footer-inner {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 24px;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 32px;
-        }
-
-        /* ---- responsive: 2 columns on tablet ---- */
-        @media (max-width: 900px) {
-            .footer-inner {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 28px 20px;
-            }
-        }
-
-        /* ---- responsive: 1 column on mobile ---- */
-        @media (max-width: 540px) {
-            .footer-inner {
-                grid-template-columns: 1fr;
-                gap: 24px;
-            }
-        }
-
-        .footer-col h6 {
-            color: var(--primary);
-            font-weight: 700;
-            font-size: 0.95rem;
-            margin-bottom: 10px;
-        }
-
-        .footer-col ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .footer-col ul li {
-            margin-bottom: 6px;
-            color: #cbd5e1;
-            font-size: 0.92rem;
-            line-height: 1.4;
-        }
-
-        .footer-col ul li a {
-            color: inherit;
-            text-decoration: none;
-            transition: color .15s;
-        }
-
-        .footer-col ul li a:hover {
-            color: var(--primary);
-        }
-
-        .footer-col address {
-            font-style: normal;
-            color: #cbd5e1;
-            font-size: 0.92rem;
-            line-height: 1.6;
-        }
-
-        /* Social icons */
-        .social-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 16px;
-        }
-
-        .social-links a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 32px;
-            height: 32px;
-            border-radius: 6px;
-            background: #111;
-            color: #fff;
-            text-decoration: none;
-            transition: transform .14s ease, box-shadow .14s ease, background .14s ease;
-            flex-shrink: 0;
-        }
-
-        .social-links a:hover {
-            transform: translateY(-3px);
-            background: #222;
-            box-shadow: 0 8px 22px rgba(0,0,0,0.35);
-        }
-
-        .social-links svg {
-            width: 16px;
-            height: 16px;
-            fill: currentColor;
-            display: block;
-        }
-
-        .footer-policy-links {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .footer-policy-links a {
-            color: var(--primary);
-            font-weight: 600;
-            font-size: 0.88rem;
-            text-decoration: none;
-        }
-
-        .footer-policy-links a:hover {
-            text-decoration: underline;
-        }
-
-        /* Bottom bar */
-        .footer-bottom {
-            margin-top: 32px;
-            padding: 14px 24px;
-            border-top: 1px solid rgba(255,255,255,0.06);
-            text-align: left;
-            color: #8a93a6;
-            font-size: 0.82rem;
-            font-weight: 500;
-        }
-
-        /* ------------- Utilities ------------- */
-        .container-center {
-            max-width: 1100px;
-            margin: 0 auto
-        }
-
-        @media (max-width:880px) {
-            .hero-content h1 {
-                font-size: 28px
-            }
-
-            .emi-vid {
-                width: 100%;
-                height: 220px
-            }
-
-            .emi-box {
-                width: 100%
-            }
-
-            .brand .logo {
-                width: 95px
-            }
-
-            .logo-grid img {
-                max-width: 100px
-            }
-        }
-    </style>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="description" content="FinJet Corporate Advisors — India's top destination for car loans, personal loans, and business loans. Fast approvals, competitive rates."/>
+  <meta property="og:title" content="FinJet — Your Trust, Our Commitment"/>
+  <meta property="og:description" content="Compare loan offers from top banks and NBFCs. Get expert guidance, fast approvals, and the best rates."/>
+  <title>FinJet — Home</title>
+
+  <!-- Premium Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet"/>
+
+  <!-- Chart.js for EMI visualization -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <!-- Bootstrap for grid/collapse -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+  <style>
+    /* ══════════════════════════════════════════
+       DESIGN SYSTEM — LUXURY FINANCE
+       Tone: Refined dark premium with crimson gold
+    ══════════════════════════════════════════ */
+    :root {
+      --crimson: #C0112B;
+      --crimson-light: #e8153a;
+      --gold: #C9A84C;
+      --gold-light: #e2c56e;
+      --navy: #060D1F;
+      --navy-mid: #0B1629;
+      --navy-light: #111f3a;
+      --ink: #080f20;
+      --glass: rgba(255,255,255,0.035);
+      --glass-border: rgba(255,255,255,0.07);
+      --muted: #8a95aa;
+      --text: #dce6f5;
+      --white: #f4f8ff;
+
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'DM Sans', sans-serif;
+
+      --radius: 14px;
+      --radius-sm: 8px;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--navy);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    /* ══ Grain texture overlay ══ */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.4;
+    }
+
+    /* ══════════════════════════════════════════
+       NAVBAR
+    ══════════════════════════════════════════ */
+    .topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 36px;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 100;
+      border-bottom: 1px solid #e8eaf0;
+      transition: box-shadow 0.4s var(--ease), background 0.3s;
+    }
+    .topbar.scrolled {
+      box-shadow: 0 6px 40px rgba(0,0,0,0.1);
+      background: rgba(255,255,255,0.99);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand .logo {
+      width: 160px;
+      height: 56px;
+      object-fit: contain;
+      border-radius: 6px;
+    }
+    .brand .tagline {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--crimson);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .nav-links a {
+      color: #1a2035;
+      font-weight: 500;
+      font-size: 14px;
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      transition: all 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 4px; left: 14px; right: 14px;
+      height: 2px;
+      background: var(--crimson);
+      border-radius: 2px;
+      transform: scaleX(0);
+      transition: transform 0.25s var(--ease);
+    }
+    .nav-links a:hover { color: var(--crimson); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    .nav-cta {
+      background: var(--crimson) !important;
+      color: #fff !important;
+      padding: 9px 20px !important;
+      border-radius: var(--radius-sm) !important;
+      font-weight: 600 !important;
+      transition: background 0.2s, transform 0.2s !important;
+    }
+    .nav-cta::after { display: none !important; }
+    .nav-cta:hover { background: var(--crimson-light) !important; transform: translateY(-1px) !important; }
+
+    .nav-toggle {
+      display: none;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: #111;
+      width: 40px; height: 40px;
+      border-radius: 8px;
+      align-items: center;
+      justify-content: center;
+    }
+    .nav-toggle svg { width: 22px; height: 22px; }
+
+    @media (max-width: 991px) {
+      .nav-toggle { display: flex; }
+      .nav-container.collapse { display: none; }
+      .nav-container.collapse.show {
+        display: flex;
+        position: absolute;
+        top: 72px; left: 0; right: 0;
+        background: rgba(255,255,255,0.98);
+        padding: 16px 24px;
+        box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+        border-bottom: 1px solid #e5e7eb;
+        z-index: 99;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .nav-links { flex-direction: column; align-items: flex-start; gap: 4px; width: 100%; }
+      .nav-links a { width: 100%; }
+    }
+    @media (min-width: 992px) {
+      .nav-toggle { display: none !important; }
+      .nav-container { display: flex !important; }
+    }
+
+    /* ══════════════════════════════════════════
+       HERO
+    ══════════════════════════════════════════ */
+    .hero-viewport {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding-top: 72px;
+    }
+
+    .bg-video {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      filter: brightness(0.3) saturate(0.8);
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg,
+        rgba(6,13,31,0.85) 0%,
+        rgba(6,13,31,0.6) 50%,
+        rgba(192,17,43,0.15) 100%
+      );
+      z-index: 1;
+    }
+
+    /* Decorative diagonal line */
+    .hero-overlay::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 120px;
+      background: linear-gradient(to bottom, transparent, var(--navy));
+      z-index: 2;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 5;
+      max-width: 900px;
+      padding: 60px 24px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(201,168,76,0.12);
+      border: 1px solid rgba(201,168,76,0.3);
+      color: var(--gold-light);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 7px 16px;
+      border-radius: 40px;
+      margin-bottom: 24px;
+      animation: fadeUp 0.8s var(--ease) both;
+    }
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.4); }
+    }
+
+    .hero-content h1 {
+      font-family: var(--font-display);
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 700;
+      line-height: 1.08;
+      color: var(--white);
+      margin-bottom: 20px;
+      text-shadow: 0 4px 40px rgba(0,0,0,0.5);
+      animation: fadeUp 0.8s 0.15s var(--ease) both;
+    }
+    .hero-content h1 em {
+      font-style: normal;
+      color: var(--gold-light);
+    }
+
+    .hero-content p {
+      font-size: 18px;
+      color: rgba(220,230,245,0.8);
+      margin-bottom: 36px;
+      font-weight: 300;
+      animation: fadeUp 0.8s 0.25s var(--ease) both;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeUp 0.8s 0.35s var(--ease) both;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--crimson), #a00d21);
+      color: #fff;
+      border: none;
+      padding: 14px 28px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 15px;
+      font-family: var(--font-body);
+      cursor: pointer;
+      box-shadow: 0 8px 32px rgba(192,17,43,0.35);
+      transition: transform 0.2s var(--ease), box-shadow 0.2s;
+      letter-spacing: 0.2px;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 40px rgba(192,17,43,0.45);
+    }
+
+    .btn-ghost {
+      background: rgba(255,255,255,0.06);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 14px 28px;
+      border-radius: var(--radius-sm);
+      font-weight: 500;
+      font-size: 15px;
+      font-family: var(--font-body);
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      transition: all 0.2s var(--ease);
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,0.4);
+      transform: translateY(-2px);
+    }
+
+    /* Stats bar */
+    .hero-stats {
+      display: flex;
+      gap: 0;
+      justify-content: center;
+      margin-top: 52px;
+      animation: fadeUp 0.8s 0.45s var(--ease) both;
+    }
+    .stat-item {
+      padding: 20px 36px;
+      border-right: 1px solid rgba(255,255,255,0.1);
+      text-align: center;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 38px;
+      font-weight: 700;
+      color: var(--gold-light);
+      line-height: 1;
+      display: block;
+    }
+    .stat-label {
+      font-size: 12px;
+      color: rgba(220,230,245,0.6);
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+      display: block;
+      text-transform: uppercase;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ══════════════════════════════════════════
+       TRUST BAR
+    ══════════════════════════════════════════ */
+    .trust-bar {
+      background: linear-gradient(90deg, var(--navy-mid), var(--navy-light));
+      border-top: 1px solid var(--glass-border);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+    .trust-icon {
+      width: 32px; height: 32px;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    /* ══════════════════════════════════════════
+       SECTION SHARED
+    ══════════════════════════════════════════ */
+    .section-wrap {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 52px;
+    }
+    .section-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(30px, 4vw, 48px);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.12;
+    }
+    .section-sub {
+      font-size: 16px;
+      color: var(--muted);
+      margin-top: 12px;
+      font-weight: 300;
+    }
+
+    /* ══════════════════════════════════════════
+       FEATURES
+    ══════════════════════════════════════════ */
+    .features {
+      padding: 90px 24px;
+      background: linear-gradient(180deg, var(--navy) 0%, var(--navy-mid) 100%);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 1100px) { .feature-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .feature-grid { grid-template-columns: 1fr; } }
+
+    .feature-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s;
+    }
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--crimson), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .feature-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(192,17,43,0.2);
+      border-color: rgba(192,17,43,0.25);
+    }
+    .feature-card:hover::before { opacity: 1; }
+
+    .feature-icon {
+      width: 48px; height: 48px;
+      background: linear-gradient(135deg, rgba(192,17,43,0.15), rgba(192,17,43,0.05));
+      border: 1px solid rgba(192,17,43,0.2);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 18px;
+    }
+    .feature-card h3 {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+    .feature-card p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* ══════════════════════════════════════════
+       PARTNER MARQUEE
+    ══════════════════════════════════════════ */
+    .partners {
+      padding: 70px 0;
+      overflow: hidden;
+      background: var(--navy-mid);
+      border-top: 1px solid var(--glass-border);
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .marquee-wrap {
+      position: relative;
+      overflow: hidden;
+    }
+    .marquee-wrap::before,
+    .marquee-wrap::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 120px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .marquee-wrap::before { left: 0; background: linear-gradient(to right, var(--navy-mid), transparent); }
+    .marquee-wrap::after  { right: 0; background: linear-gradient(to left, var(--navy-mid), transparent); }
+
+    .marquee-track {
+      display: flex;
+      gap: 20px;
+      width: max-content;
+      animation: marquee 30s linear infinite;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .partner-tile {
+      flex-shrink: 0;
+      width: 150px;
+      height: 76px;
+      background: #fff;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 14px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .partner-tile:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+    }
+    .partner-tile img {
+      max-width: 100%;
+      max-height: 50px;
+      object-fit: contain;
+    }
+
+    /* ══════════════════════════════════════════
+       EMI CALCULATOR (upgraded)
+    ══════════════════════════════════════════ */
+    .emi-section {
+      padding: 90px 24px;
+      background: linear-gradient(180deg, var(--navy-mid), var(--navy));
+    }
+
+    .emi-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+      max-width: 1060px;
+      margin: 0 auto;
+    }
+    @media (max-width: 860px) { .emi-grid { grid-template-columns: 1fr; } }
+
+    .emi-form-box {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      padding: 36px 32px;
+    }
+
+    .emi-form-box h2 {
+      font-family: var(--font-display);
+      font-size: 32px;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+    .emi-form-box .emi-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+      letter-spacing: 0.2px;
+    }
+    .form-group label span {
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    .form-group input[type=range] {
+      width: 100%;
+      -webkit-appearance: none;
+      height: 4px;
+      background: var(--glass-border);
+      border-radius: 4px;
+      outline: none;
+      cursor: pointer;
+    }
+    .form-group input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px; height: 18px;
+      background: var(--crimson);
+      border-radius: 50%;
+      border: 2px solid #fff;
+      box-shadow: 0 2px 10px rgba(192,17,43,0.4);
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+    .form-group input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+    .emi-result {
+      margin-top: 28px;
+      padding: 22px;
+      background: linear-gradient(135deg, rgba(192,17,43,0.12), rgba(192,17,43,0.05));
+      border: 1px solid rgba(192,17,43,0.2);
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .emi-monthly {
+      font-family: var(--font-display);
+      font-size: 40px;
+      color: var(--white);
+      font-weight: 700;
+    }
+    .emi-monthly span { font-size: 22px; color: var(--gold); }
+    .emi-result-label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+    .emi-chart-box {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+    .emi-chart-box h3 {
+      font-family: var(--font-display);
+      font-size: 22px;
+      color: var(--white);
+      align-self: flex-start;
+    }
+
+    .chart-container {
+      width: 220px;
+      height: 220px;
+      position: relative;
+    }
+
+    .chart-legend {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 14px;
+    }
+    .legend-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-right: 10px;
+    }
+    .legend-left {
+      display: flex;
+      align-items: center;
+      color: var(--muted);
+    }
+    .legend-val {
+      color: var(--white);
+      font-weight: 600;
+    }
+
+    .emi-totals {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      width: 100%;
+    }
+    .total-pill {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--glass-border);
+      border-radius: 10px;
+      padding: 14px 12px;
+      text-align: center;
+    }
+    .total-pill .val {
+      font-family: var(--font-display);
+      font-size: 18px;
+      color: var(--white);
+      font-weight: 700;
+      display: block;
+    }
+    .total-pill .lbl {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-top: 2px;
+      display: block;
+    }
+
+    /* ══════════════════════════════════════════
+       SERVICES
+    ══════════════════════════════════════════ */
+    .services {
+      padding: 90px 24px;
+      background: var(--navy);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 18px;
+      max-width: 1160px;
+      margin: 0 auto;
+    }
+    @media (max-width: 1100px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .services-grid { grid-template-columns: 1fr; } }
+
+    .service-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      padding: 28px 20px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s var(--ease), box-shadow 0.3s;
+      cursor: default;
+    }
+    .service-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(192,17,43,0.04), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+      border-color: rgba(192,17,43,0.2);
+    }
+    .service-card:hover::after { opacity: 1; }
+
+    .service-num {
+      font-family: var(--font-display);
+      font-size: 52px;
+      font-weight: 700;
+      color: rgba(192,17,43,0.12);
+      line-height: 1;
+      margin-bottom: 16px;
+      transition: color 0.3s;
+    }
+    .service-card:hover .service-num { color: rgba(192,17,43,0.2); }
+
+    .service-card h3 {
+      font-family: var(--font-display);
+      font-size: 20px;
+      color: var(--white);
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+    .service-card p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .service-arrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--crimson);
+      opacity: 0;
+      transform: translateX(-8px);
+      transition: all 0.25s var(--ease);
+    }
+    .service-card:hover .service-arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* ══════════════════════════════════════════
+       REVIEWS
+    ══════════════════════════════════════════ */
+    .reviews {
+      padding: 90px 24px;
+      background: var(--navy-mid);
+    }
+
+    .reviews-carousel {
+      position: relative;
+      overflow: hidden;
+    }
+    .reviews-track {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding: 8px 4px 24px;
+      scroll-snap-type: x mandatory;
+    }
+    .reviews-track::-webkit-scrollbar { display: none; }
+
+    .review-card {
+      min-width: 300px;
+      max-width: 340px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      padding: 26px 22px;
+      scroll-snap-align: start;
+      transition: transform 0.2s, box-shadow 0.2s;
+      flex-shrink: 0;
+    }
+    .review-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+    }
+
+    .review-stars {
+      color: #f5a623;
+      font-size: 14px;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+    .review-card p {
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.65;
+      font-weight: 300;
+      font-style: italic;
+    }
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid var(--glass-border);
+    }
+    .author-avatar {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--crimson), #7a0a1a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .author-name {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--white);
+    }
+    .author-tag {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 1px;
+    }
+
+    .reviews-nav {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 28px;
+    }
+    .reviews-nav button {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--glass-border);
+      background: var(--glass);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .reviews-nav button:hover {
+      background: var(--crimson);
+      border-color: var(--crimson);
+      color: #fff;
+    }
+
+    /* ══════════════════════════════════════════
+       MAP
+    ══════════════════════════════════════════ */
+    .map-section {
+      padding: 70px 24px;
+      background: var(--navy);
+    }
+    .map-section iframe {
+      width: 100%;
+      height: 420px;
+      border-radius: var(--radius);
+      border: 0;
+      filter: invert(90%) hue-rotate(180deg) saturate(0.8) brightness(0.85);
+    }
+
+    /* ══════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════ */
+    .site-footer {
+      background: var(--ink);
+      border-top: 1px solid rgba(192,17,43,0.1);
+      padding: 64px 24px 0;
+      font-size: 14px;
+    }
+
+    .footer-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+    }
+    @media (max-width: 900px) { .footer-inner { grid-template-columns: repeat(2,1fr); gap: 32px; } }
+    @media (max-width: 540px) { .footer-inner { grid-template-columns: 1fr; gap: 28px; } }
+
+    .footer-brand p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 14px;
+      font-weight: 300;
+      line-height: 1.7;
+      max-width: 280px;
+    }
+    .footer-brand .logo-wrap img {
+      height: 48px;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+      opacity: 0.85;
+    }
+
+    .footer-col h6 {
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+      margin-bottom: 16px;
+    }
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-col ul li a,
+    .footer-col ul li {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 300;
+      transition: color 0.2s;
+    }
+    .footer-col ul li a:hover { color: var(--white); }
+    .footer-col address {
+      font-style: normal;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.8;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .social-links a {
+      width: 36px; height: 36px;
+      border-radius: 9px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--glass-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      transition: all 0.2s;
+    }
+    .social-links a:hover {
+      background: var(--crimson);
+      border-color: var(--crimson);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+    .social-links svg { width: 16px; height: 16px; fill: currentColor; }
+
+    .footer-bottom {
+      max-width: 1160px;
+      margin: 40px auto 0;
+      padding: 18px 0;
+      border-top: 1px solid var(--glass-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .footer-bottom p {
+      color: #4a5568;
+      font-size: 12px;
+    }
+    .footer-legal {
+      display: flex;
+      gap: 20px;
+    }
+    .footer-legal a {
+      color: #4a5568;
+      font-size: 12px;
+      transition: color 0.2s;
+    }
+    .footer-legal a:hover { color: var(--crimson); }
+
+    /* ══════════════════════════════════════════
+       SCROLL REVEAL
+    ══════════════════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+  </style>
 </head>
 <body>
-    <!-- Fixed Topbar -->
-    <header class="topbar" role="banner" aria-label="Primary navigation">
-        <div class="brand">
-            <img src="Home/FINJET LOGO AI-1.jpg" alt="FinJet logo" class="logo" />
-            <div class="tag">Your Trust, Our Commitment</div>
+
+  <!-- ══ NAVBAR ══ -->
+  <header class="topbar" id="topbar" role="banner">
+    <div class="brand">
+      <img src="Home/FINJET LOGO AI-1.jpg" alt="FinJet Corporate Advisors" class="logo" onerror="this.style.display='none'; this.nextSibling.style.display='block'"/>
+      <div style="display:none; font-family:var(--font-display); font-size:24px; font-weight:700; color:#C0112B;">FinJet</div>
+      <div class="tagline">Your Trust, Our Commitment</div>
+    </div>
+
+    <button class="nav-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+      <svg viewBox="0 0 24 24"><path fill="currentColor" d="M3 6h18v2H3zM3 11h18v2H3zM3 16h18v2H3z"/></svg>
+    </button>
+
+    <div id="mainNav" class="nav-container collapse">
+      <nav class="nav-links">
+        <a href="#services">Services</a>
+        <a href="#emi-section">EMI Calculator</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#footer">Contact</a>
+        <a href="#" class="nav-cta">Apply Now</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ══ HERO ══ -->
+  <section class="hero-viewport">
+    <video class="bg-video" autoplay muted loop playsinline poster="">
+      <source src="Videos/Home/FINJET.mp4" type="video/mp4"/>
+    </video>
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge">🇮🇳 India's Premier Loan Advisory</div>
+
+      <h1>Your Dream Car.<br/><em>Your Perfect Loan.</em></h1>
+      <p>Compare offers from 12+ banks & NBFCs. Expert guidance, fast approvals, best rates.</p>
+
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="document.getElementById('emi-section').scrollIntoView({behavior:'smooth'})">Calculate EMI</button>
+        <button class="btn-ghost" onclick="document.getElementById('footer').scrollIntoView({behavior:'smooth'})">Talk to an Advisor</button>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-num" data-target="5000">0</span>
+          <span class="stat-label">Loans Disbursed</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num" data-target="12">0</span>
+          <span class="stat-label">Banking Partners</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num" data-target="98">0</span>
+          <span class="stat-label">% Satisfaction</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num" data-target="6">0</span>
+          <span class="stat-label">Years of Excellence</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ TRUST BAR ══ -->
+  <div class="trust-bar reveal">
+    <div class="trust-item">
+      <div class="trust-icon">🔒</div>
+      <span>Bank-Grade Secure</span>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">⚡</div>
+      <span>24-Hour Approvals</span>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">📋</div>
+      <span>Minimal Documentation</span>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">💰</div>
+      <span>Zero Hidden Charges</span>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">🏆</div>
+      <span>RBI Compliant</span>
+    </div>
+  </div>
+
+  <!-- ══ FEATURES ══ -->
+  <section class="features">
+    <div class="section-wrap">
+      <div class="section-header reveal">
+        <span class="section-label">Why FinJet</span>
+        <h2 class="section-title">Smarter Loans.<br/>Better Outcomes.</h2>
+        <p class="section-sub">Everything you need to secure the right loan, in one place.</p>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature-card reveal reveal-delay-1">
+          <div class="feature-icon">🏦</div>
+          <h3>Multiple Options, One Place</h3>
+          <p>Compare offers from leading banks and NBFCs without visiting each institution separately.</p>
+        </article>
+        <article class="feature-card reveal reveal-delay-2">
+          <div class="feature-icon">🧭</div>
+          <h3>Personalised Loan Guidance</h3>
+          <p>Expert advisors match you to the ideal product based on income, credit score, and goals.</p>
+        </article>
+        <article class="feature-card reveal reveal-delay-3">
+          <div class="feature-icon">📄</div>
+          <h3>Error-Free Documentation</h3>
+          <p>Our experts review every document to minimise rejections and eliminate repeated bank visits.</p>
+        </article>
+        <article class="feature-card reveal reveal-delay-4">
+          <div class="feature-icon">🛡️</div>
+          <h3>Safe & Secure Process</h3>
+          <p>Documents handled through verified, encrypted channels — your data is always protected.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PARTNERS (Marquee) ══ -->
+  <section class="partners">
+    <div class="section-wrap" style="margin-bottom:32px">
+      <div class="section-header reveal" style="margin-bottom:0">
+        <span class="section-label">Trusted Network</span>
+        <h2 class="section-title" style="font-size:clamp(24px,3vw,36px)">Our Banking Partners</h2>
+      </div>
+    </div>
+
+    <div class="marquee-wrap">
+      <div class="marquee-track" id="marqueeTrack">
+        <!-- Original set -->
+        <div class="partner-tile"><img src="Home/img1.png" alt="Banking Partner" onerror="this.parentElement.style.background='#f5f5f5'"/></div>
+        <div class="partner-tile"><img src="Home/img2.png" alt="Banking Partner" onerror="this.parentElement.style.background='#f5f5f5'"/></div>
+        <div class="partner-tile"><img src="Home/img3.png" alt="Banking Partner" onerror="this.parentElement.style.background='#f5f5f5'"/></div>
+        <div class="partner-tile"><img src="Home/img4.png" alt="Banking Partner" onerror="this.parentElement.style.background='#f5f5f5'"/></div>
+        <div class="partner-tile"><img src="Home/img5.png" alt="Banking Partner" onerror="this.parentElement.style.background='#f5f5f5'"/></div>
+        <div class="partner-tile"><img src="Home/img6.png" alt="Banking Partner" onerror="this.parentElement.style.background='#f5f5f5'"/></div>
+        <div class="partner-tile"><img src="Home/img7.png" alt="Banking Partner" onerror="this.parentElement.style.background='#f5f5f5'"/></div>
+        <div class="partner-tile"><img src="Home/img8.png" alt="Banking Partner" onerror="this.parentElement.style.background='#f5f5f5'"/></div>
+        <div class="partner-tile"><img src="Home/IMG9.png" alt="Banking Partner" onerror="this.parentElement.style.background='#f5f5f5'"/></div>
+        <div class="partner-tile"><img src="Home/img10.png" alt="Banking Partner" onerror="this.parentElement.style.background='#f5f5f5'"/></div>
+        <div class="partner-tile"><img src="Home/img11.png" alt="Banking Partner" onerror="this.parentElement.style.background='#f5f5f5'"/></div>
+        <div class="partner-tile"><img src="Home/img12.png" alt="Banking Partner" onerror="this.parentElement.style.background='#f5f5f5'"/></div>
+        <!-- Duplicate for seamless loop -->
+        <div class="partner-tile"><img src="Home/img1.png" alt="Banking Partner" onerror="this.parentElement.style.background='#f5f5f5'"/></div>
+        <div class="partner-tile"><img src="Home/img2.png" alt="Banking Partner" onerror="this.parentElement.style.background='#f5f5f5'"/></div>
+        <div class="partner-tile"><img src="Home/img3.png" alt="Banking Partner" onerror="this.parentElement.style.background='#f5f5f5'"/></div>
+        <div class="partner-tile"><img src="Home/img4.png" alt="Banking Partner" onerror="this.parentElement.style.background='#f5f5f5'"/></div>
+        <div class="partner-tile"><img src="Home/img5.png" alt="Banking Partner" onerror="this.parentElement.style.background='#f5f5f5'"/></div>
+        <div class="partner-tile"><img src="Home/img6.png" alt="Banking Partner" onerror="this.parentElement.style.background='#f5f5f5'"/></div>
+        <div class="partner-tile"><img src="Home/img7.png" alt="Banking Partner" onerror="this.parentElement.style.background='#f5f5f5'"/></div>
+        <div class="partner-tile"><img src="Home/img8.png" alt="Banking Partner" onerror="this.parentElement.style.background='#f5f5f5'"/></div>
+        <div class="partner-tile"><img src="Home/IMG9.png" alt="Banking Partner" onerror="this.parentElement.style.background='#f5f5f5'"/></div>
+        <div class="partner-tile"><img src="Home/img10.png" alt="Banking Partner" onerror="this.parentElement.style.background='#f5f5f5'"/></div>
+        <div class="partner-tile"><img src="Home/img11.png" alt="Banking Partner" onerror="this.parentElement.style.background='#f5f5f5'"/></div>
+        <div class="partner-tile"><img src="Home/img12.png" alt="Banking Partner" onerror="this.parentElement.style.background='#f5f5f5'"/></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ EMI CALCULATOR ══ -->
+  <section id="emi-section" class="emi-section">
+    <div class="section-wrap">
+      <div class="section-header reveal">
+        <span class="section-label">Financial Planning</span>
+        <h2 class="section-title">Calculate Your EMI</h2>
+        <p class="section-sub">Instantly estimate your monthly payment and total interest.</p>
+      </div>
+
+      <div class="emi-grid">
+        <!-- Form -->
+        <div class="emi-form-box reveal">
+          <h2>EMI Calculator</h2>
+          <p class="emi-sub">Adjust the sliders to see live calculations</p>
+
+          <div class="form-group">
+            <label>Loan Amount <span id="loanDisplay">₹5,00,000</span></label>
+            <input type="range" id="loanSlider" min="50000" max="5000000" step="10000" value="500000"/>
+          </div>
+          <div class="form-group">
+            <label>Interest Rate <span id="rateDisplay">9.5% p.a.</span></label>
+            <input type="range" id="rateSlider" min="6" max="24" step="0.5" value="9.5"/>
+          </div>
+          <div class="form-group">
+            <label>Tenure <span id="tenureDisplay">36 months</span></label>
+            <input type="range" id="tenureSlider" min="6" max="84" step="6" value="36"/>
+          </div>
+
+          <div class="emi-result">
+            <div>
+              <div class="emi-result-label">Monthly EMI</div>
+              <div class="emi-monthly"><span>₹</span><span id="emiDisplay">15,939</span></div>
+            </div>
+            <button class="btn-primary" style="padding:12px 22px;font-size:14px" onclick="document.getElementById('footer').scrollIntoView({behavior:'smooth'})">
+              Apply Now →
+            </button>
+          </div>
         </div>
 
-        <!-- Toggler: visible on < large screens -->
-        <button class="nav-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 6h18v2H3zM3 11h18v2H3zM3 16h18v2H3z"/></svg>
-        </button>
-
-        <!-- Collapsible nav: shown on large screens, collapses on smaller -->
-        <div id="mainNav" class="nav-container collapse" aria-label="Main links container">
-            <nav class="nav-links" aria-label="Main links">
-                <a href="#servi">Our Services</a>
-                <a href="#emi-section">EMI Calculator</a>
-                <a href="#foot">Contact</a>
-            </nav>
+        <!-- Chart -->
+        <div class="emi-chart-box reveal reveal-delay-2">
+          <h3>Loan Breakdown</h3>
+          <div class="chart-container">
+            <canvas id="emiChart"></canvas>
+          </div>
+          <div class="chart-legend">
+            <div class="legend-item">
+              <div class="legend-left"><span class="legend-dot" style="background:#C0112B"></span>Principal Amount</div>
+              <span class="legend-val" id="legendPrincipal">₹5,00,000</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-left"><span class="legend-dot" style="background:#C9A84C"></span>Total Interest</div>
+              <span class="legend-val" id="legendInterest">₹73,804</span>
+            </div>
+          </div>
+          <div class="emi-totals">
+            <div class="total-pill">
+              <span class="val" id="totalPayable">₹5.7L</span>
+              <span class="lbl">Total Payable</span>
+            </div>
+            <div class="total-pill">
+              <span class="val" id="totalInterestPill">₹73.8K</span>
+              <span class="lbl">Interest Cost</span>
+            </div>
+            <div class="total-pill">
+              <span class="val" id="savingPill">9.5%</span>
+              <span class="lbl">Rate p.a.</span>
+            </div>
+          </div>
         </div>
-    </header>
+      </div>
+    </div>
+  </section>
 
-    <!-- Hero / Video Banner -->
-    <section class="hero-viewport" role="region" aria-label="Hero">
-        <video class="bg-video" autoplay muted loop playsinline>
-            <source src="Videos/Home/FINJET.mp4" type="video/mp4" />
-        </video>
-        <div class="overlay" aria-hidden="true"></div>
+  <!-- ══ SERVICES ══ -->
+  <section id="services" class="services">
+    <div class="section-wrap">
+      <div class="section-header reveal">
+        <span class="section-label">What We Offer</span>
+        <h2 class="section-title">Our Services</h2>
+        <p class="section-sub">Comprehensive loan solutions tailored to every need.</p>
+      </div>
 
-        <div class="hero-content container-center">
-            <h1>India's Top destination for Car loans</h1>
-            <p>Your Trust, Our Commitment. Your Success, Our Mission.</p>
+      <div class="services-grid">
+        <div class="service-card reveal reveal-delay-1">
+          <div class="service-num">01</div>
+          <h3>New Car Loans</h3>
+          <p>Competitive rates, flexible repayment, and quick approvals to drive your dream car home.</p>
+          <div class="service-arrow">Explore →</div>
         </div>
-    </section>
-
-    <!-- Features -->
-    <section class="features" aria-labelledby="why-choose">
-        <div class="wrap container-center">
-            <h2 id="why-choose">Why Choose Us?</h2>
-
-            <div class="feature-cards" role="list">
-                <article class="feature-card" role="listitem">
-                    <h3>Multiple Loan Options in One Place</h3>
-                    <p>Customers can compare offers from different banks and NBFCs without visiting each institution separately.</p>
-                </article>
-
-                <article class="feature-card" role="listitem">
-                    <h3>Personalised Loan Guidance</h3>
-                    <p>Advisors help customers choose the right product based on income, credit score, and repayment capacity.</p>
-                </article>
-
-                <article class="feature-card" role="listitem">
-                    <h3>Error-Free Documentation</h3>
-                    <p>Experts review customer documents to reduce rejection chances and avoid repeated bank visits.</p>
-                </article>
-
-                <article class="feature-card" role="listitem">
-                    <h3>Safe and Secure Process</h3>
-                    <p>Documents are handled through verified channels, reducing fraud and ensuring data security.</p>
-                </article>
-            </div>
+        <div class="service-card reveal reveal-delay-2">
+          <div class="service-num">02</div>
+          <h3>Used Car Loans</h3>
+          <p>Low interest rates and flexible EMIs — own a quality pre-owned car without financial strain.</p>
+          <div class="service-arrow">Explore →</div>
         </div>
-    </section>
-
-    <!-- Partners -->
-    <section class="partners" aria-labelledby="partners-heading">
-        <div class="wrap container-center">
-            <h2 id="partners-heading">Our Trusted Partners</h2>
-
-            <div class="logo-grid" role="list" aria-label="Partner logos">
-                <a href="#" role="listitem" aria-label="Partner 1"><img src="Home/img1.png" alt="Partner 1"></a>
-                <a href="#" role="listitem" aria-label="Partner 2"><img src="Home/img2.png" alt="Partner 2"></a>
-                <a href="#" role="listitem" aria-label="Partner 3"><img src="Home/img3.png" alt="Partner 3"></a>
-                <a href="#" role="listitem" aria-label="Partner 4"><img src="Home/img4.png" alt="Partner 4"></a>
-
-                <a href="#" role="listitem" aria-label="Partner 5"><img src="Home/img5.png" alt="Partner 5"></a>
-                <a href="#" role="listitem" aria-label="Partner 6"><img src="Home/img6.png" alt="Partner 6"></a>
-                <a href="#" role="listitem" aria-label="Partner 7"><img src="Home/img7.png" alt="Partner 7"></a>
-                <a href="#" role="listitem" aria-label="Partner 8"><img src="Home/img8.png" alt="Partner 8"></a>
-
-                <a href="#" role="listitem" aria-label="Partner 9"><img src="Home/IMG9.png" alt="Partner 9"></a>
-                <a href="#" role="listitem" aria-label="Partner 10"><img src="Home/img10.png" alt="Partner 10"></a>
-                <a href="#" role="listitem" aria-label="Partner 11"><img src="Home/img11.png" alt="Partner 11"></a>
-                <a href="#" role="listitem" aria-label="Partner 12"><img src="Home/img12.png" alt="Partner 12"></a>
-            </div>
+        <div class="service-card reveal reveal-delay-3">
+          <div class="service-num">03</div>
+          <h3>Personal Loans</h3>
+          <p>Quick approvals, flexible repayment options, and competitive rates for all your goals.</p>
+          <div class="service-arrow">Explore →</div>
         </div>
-    </section>
-
-    <!-- EMI Calculator -->
-    <section id="emi-section" class="emi-section" aria-labelledby="emi-heading">
-        <div class="emi-wrap">
-            <div class="emi-box" aria-labelledby="emi-heading">
-                <h2 id="emi-heading" style="color:var(--primary);margin-bottom:6px">EMI Calculator</h2>
-
-                <label for="loan">Loan Amount (₹)</label>
-                <input type="number" id="loan" placeholder="Enter loan amount">
-
-                <label for="rate">Interest Rate (% per annum)</label>
-                <input type="number" id="rate" placeholder="Enter interest rate">
-
-                <label for="months">Loan Tenure (Months)</label>
-                <input type="number" id="months" placeholder="Enter number of months">
-
-                <label for="emi">Monthly EMI (₹)</label>
-                <input type="text" id="emi" readonly placeholder="₹ 0.00" style="font-weight:700">
-            </div>
-
-            <video class="emi-vid" autoplay muted loop playsinline>
-                <source src="Videos/Home/EMICALC.mp4" type="video/mp4" />
-            </video>
+        <div class="service-card reveal reveal-delay-4">
+          <div class="service-num">04</div>
+          <h3>Business Loans</h3>
+          <p>Flexible business funding with customizable repayment plans to fuel your growth.</p>
+          <div class="service-arrow">Explore →</div>
         </div>
-    </section>
-
-    <!-- Services -->
-    <section id="servi" class="services" aria-labelledby="services-heading">
-        <h2 id="services-heading">Our Services</h2>
-
-        <div class="services-grid container-center">
-            <div class="service-card">
-                <h3>New Car Loans</h3>
-                <p>Buying your dream car is now simple and stress-free. Our New Car Loans offer competitive rates, flexible repayment options, and quick approvals</p>
-            </div>
-
-            <div class="service-card">
-                <h3>Used Car Loans</h3>
-                <p>Upgrade your ride effortlessly with our Used Car Loans. Enjoy quick approvals, low interest rates, and flexible EMIs — making it easy to own a quality pre-owned car without financial strain.</p>
-            </div>
-
-            <div class="service-card">
-                <h3>Personal Loans</h3>
-                <p>Fulfill your goals with our hassle-free Personal Loans. Get quick approvals, flexible repayment options, and competitive interest rates to manage your expenses with ease and confidence.</p>
-            </div>
-
-            <div class="service-card">
-                <h3>Business Loans</h3>
-                <p>Empower your business growth with our flexible Business Loans. Access quick funding, low interest rates, and customizable repayment plans to expand, invest, or manage operations with ease.</p>
-            </div>
-
-            <div class="service-card">
-                <h3>Doctors Loans</h3>
-                <p>Advance your medical practice with our exclusive Doctors Loans. Get quick approvals, attractive interest rates, and flexible repayment options to expand your clinic, upgrade equipment, or manage professional expenses with ease.</p>
-            </div>
+        <div class="service-card reveal reveal-delay-4">
+          <div class="service-num">05</div>
+          <h3>Doctors Loans</h3>
+          <p>Exclusive financing for medical professionals — expand your practice with ease.</p>
+          <div class="service-arrow">Explore →</div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- Reviews -->
-    <section class="reviews" aria-labelledby="reviews-heading">
-        <div class="wrap container-center">
-            <h2 id="reviews-heading" style="color:var(--primary);margin-bottom:12px">Real Stories from our valued customers</h2>
+  <!-- ══ REVIEWS ══ -->
+  <section id="reviews" class="reviews">
+    <div class="section-wrap">
+      <div class="section-header reveal">
+        <span class="section-label">Testimonials</span>
+        <h2 class="section-title">Real Stories from<br/>Our Customers</h2>
+      </div>
 
-            <div class="review-track" role="list">
-                <div class="review-card" role="listitem">
-                    <strong>⭐⭐⭐⭐⭐</strong>
-                    <p>Excellent service! Fast and transparent loan processing.</p>
-                    <small>- Sretha P</small>
-                </div>
-
-                <div class="review-card" role="listitem">
-                    <strong>⭐⭐⭐⭐⭐</strong>
-                    <p>Very professional advisors. Helped me get the lowest interest rate.</p>
-                    <small>- Sneha Suresh</small>
-                </div>
-
-                <div class="review-card" role="listitem">
-                    <strong>⭐⭐⭐⭐⭐</strong>
-                    <p>Finjet provides excellent service with minimal documentation required. They offer fast approvals and competitive, low interest rates, making the loan process smooth and hassle-free.</p>
-                    <small>- Athul M KKR</small>
-                </div>
-
-                <div class="review-card" role="listitem">
-                    <strong>⭐⭐⭐⭐⭐</strong>
-                    <p>Excellent service and great customer support. Thanks carloan guys.</p>
-                    <small>- Praveen Rajan</small>
-                </div>
-
-                <div class="review-card" role="listitem">
-                    <strong>⭐⭐⭐⭐⭐</strong>
-                    <p>Seamless process from start to finish. Great team!</p>
-                    <small>- Rajesh Kumar</small>
-                </div>
-
-                <div class="review-card" role="listitem">
-                    <strong>⭐⭐⭐⭐⭐</strong>
-                    <p>Great Service,Thank you Team FinJet</p>
-                    <small>- Reshmi K P</small>
-                </div>
+      <div class="reviews-carousel reveal">
+        <div class="reviews-track" id="reviewsTrack">
+          <div class="review-card">
+            <div class="review-stars">★★★★★</div>
+            <p>"Excellent service! Fast and transparent loan processing. Couldn't be happier."</p>
+            <div class="review-author">
+              <div class="author-avatar">SP</div>
+              <div>
+                <div class="author-name">Sretha P</div>
+                <div class="author-tag">New Car Loan</div>
+              </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Map -->
-    <section class="map" aria-label="Map">
-        <div class="container-center">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3541.1432760685357!2d75.77371307452302!3d11.25473805019014!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba65f34a1d596ed%3A0x3c8107705fec79d2!2sFinjet%20Corporate%20advisors%20Pvt%20Ltd!5e1!3m2!1sen!2sin!4v1762854708374!5m2!1sen!2sin"
-                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
-    </section>
-
-    <!-- ===== FOOTER (fixed for mobile) ===== -->
-    <footer id="foot" class="site-footer">
-        <div class="footer-inner">
-
-            <!-- Col 1: Loans -->
-            <div class="footer-col">
-                <h6>Loans</h6>
-                <ul>
-                    <li><a href="@Url.Action("ApplyLoan", "Home")">New Car Loans</a></li>
-                    <li><a href="@Url.Action("ApplyLoan", "Home")">Used Car Loans</a></li>
-                    <li><a href="@Url.Action("ApplyLoan", "Home")">Personal Loans</a></li>
-                    <li><a href="@Url.Action("ApplyLoan", "Home")">Business Loans</a></li>
-                    <li><a href="@Url.Action("ApplyLoan", "Home")">Doctors Loans</a></li>
-                </ul>
+          </div>
+          <div class="review-card">
+            <div class="review-stars">★★★★★</div>
+            <p>"Very professional advisors. Helped me secure the lowest interest rate available in the market."</p>
+            <div class="review-author">
+              <div class="author-avatar">SS</div>
+              <div>
+                <div class="author-name">Sneha Suresh</div>
+                <div class="author-tag">Personal Loan</div>
+              </div>
             </div>
-
-            <!-- Col 2: Consultation -->
-            <div class="footer-col">
-                <h6>Need consultation?</h6>
-                <ul>
-                    <li>Call now: <a href="tel:+919539577060" style="color:#fff;font-weight:600;">+91 95395 77060</a></li>
-                    <li>Mon–Sat, 9:30 am – 5:30 pm</li>
-                </ul>
+          </div>
+          <div class="review-card">
+            <div class="review-stars">★★★★★</div>
+            <p>"FinJet provides excellent service with minimal documentation. Fast approvals and competitive rates made the process completely hassle-free."</p>
+            <div class="review-author">
+              <div class="author-avatar">AM</div>
+              <div>
+                <div class="author-name">Athul M KKR</div>
+                <div class="author-tag">Used Car Loan</div>
+              </div>
             </div>
-
-            <!-- Col 3: Address -->
-            <div class="footer-col">
-                <h6>Corporate Office Address</h6>
-                <address>
-                    M Sons Building<br />
-                    3rd Floor, Cherooty Road<br />
-                    Calicut – 673001<br />
-                    Kerala, India
-                </address>
+          </div>
+          <div class="review-card">
+            <div class="review-stars">★★★★★</div>
+            <p>"Excellent service and outstanding customer support. The team went above and beyond. Thanks FinJet!"</p>
+            <div class="review-author">
+              <div class="author-avatar">PR</div>
+              <div>
+                <div class="author-name">Praveen Rajan</div>
+                <div class="author-tag">Business Loan</div>
+              </div>
             </div>
-
-            <!-- Col 4: Social + Legal -->
-            <div class="footer-col">
-                <h6>Connect with us</h6>
-                <div class="social-links" role="list" aria-label="Social links">
-                    <!-- Facebook -->
-                    <a role="listitem" aria-label="Facebook" href="https://www.facebook.com/p/Finjet-Corporate-Advisors-Pvt-Ltd-100067485128393/" target="_blank" rel="noopener noreferrer">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12.07C22 6.48 17.52 2 11.93 2S2 6.48 2 12.07C2 17.04 5.66 21.13 10.44 21.9v-6.26H7.9v-2.57h2.54V9.5c0-2.5 1.49-3.88 3.77-3.88 1.09 0 2.23.2 2.23.2v2.45h-1.25c-1.23 0-1.61.77-1.61 1.56v1.87h2.74l-.44 2.57h-2.3V21.9C18.34 21.13 22 17.04 22 12.07z"/></svg>
-                    </a>
-                    <!-- Instagram -->
-                    <a role="listitem" aria-label="Instagram" href="https://www.instagram.com/finjetofficial/" target="_blank" rel="noopener noreferrer">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5H7zm5 5.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5zm6.5-.9a1.1 1.1 0 1 1-1.1 1.1 1.1 1.1 0 0 1 1.1-1.1zM12 9.5A2.5 2.5 0 1 0 14.5 12 2.5 2.5 0 0 0 12 9.5z"/></svg>
-                    </a>
-                    <!-- WhatsApp -->
-                    <a role="listitem" aria-label="WhatsApp" href="https://wa.me/918714570666?text=to%20know%20more%20about%20Finjet%20services%20chat%20with%20our%20executive%20right%20now" target="_blank" rel="noopener noreferrer">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.52 3.48A11.95 11.95 0 0 0 12 0C5.37 0 .04 5.33.04 11.96c0 2.11.55 4.16 1.6 5.97L0 24l6.3-1.63a12 12 0 0 0 5.7 1.43c6.63 0 11.96-5.33 11.96-11.96 0-3.19-1.24-6.19-3.44-8.82zM12 21.6c-1.85 0-3.66-.5-5.24-1.45l-.37-.22-3.74.97.99-3.64-.24-.38A8.28 8.28 0 0 1 3.72 9.2 8.28 8.28 0 0 1 12 3.6c4.58 0 8.28 3.7 8.28 8.28S16.58 20.16 12 20.16zM16.27 14.6c-.26-.13-1.54-.76-1.78-.85-.24-.08-.41-.13-.58.13-.17.26-.65.85-.8 1.02-.15.17-.29.19-.55.06-.26-.13-1.1-.4-2.1-1.29-.78-.69-1.3-1.55-1.45-1.81-.15-.26-.02-.4.11-.53.11-.11.26-.29.39-.44.13-.15.17-.26.26-.43.09-.17.04-.32-.02-.45-.06-.13-.58-1.4-.79-1.92-.21-.5-.43-.43-.58-.44-.15-.01-.32-.01-.5-.01-.17 0-.45.06-.69.32-.24.26-.91.89-.91 2.17 0 1.28.93 2.52 1.06 2.69.13.17 1.85 2.88 4.48 3.93 2.63 1.05 2.63.7 3.1.66.47-.04 1.53-.62 1.75-1.22.22-.6.22-1.11.15-1.22-.07-.11-.26-.17-.52-.3z"/></svg>
-                    </a>
-                    <!-- Email -->
-                    <a role="listitem" aria-label="Email" href="mailto:info@finjet.com" target="_blank" rel="noopener noreferrer">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                    </a>
-                </div>
-
-                <div class="footer-policy-links">
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms of Use</a>
-                </div>
+          </div>
+          <div class="review-card">
+            <div class="review-stars">★★★★★</div>
+            <p>"Seamless process from start to finish. The team was incredibly knowledgeable and supportive throughout."</p>
+            <div class="review-author">
+              <div class="author-avatar">RK</div>
+              <div>
+                <div class="author-name">Rajesh Kumar</div>
+                <div class="author-tag">New Car Loan</div>
+              </div>
             </div>
-
+          </div>
+          <div class="review-card">
+            <div class="review-stars">★★★★★</div>
+            <p>"Great service throughout! The team made everything so smooth. Thank you Team FinJet!"</p>
+            <div class="review-author">
+              <div class="author-avatar">RK</div>
+              <div>
+                <div class="author-name">Reshmi K P</div>
+                <div class="author-tag">Personal Loan</div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- Bottom bar -->
-        <div class="footer-bottom">
-            &copy; Finjet Corporate Advisors Pvt Ltd 2019
+        <div class="reviews-nav">
+          <button onclick="scrollReviews(-1)" aria-label="Previous">←</button>
+          <button onclick="scrollReviews(1)" aria-label="Next">→</button>
         </div>
-    </footer>
+      </div>
+    </div>
+  </section>
 
-    <!-- Scripts -->
-    <script>
-        // Intersection animation: add .show when in view
-        (function(){
-            const els = document.querySelectorAll('.slide-up-scroll, .feature-card, .service-card, .review-card, .logo-grid a');
-            const obs = new IntersectionObserver((entries)=>{
-                entries.forEach(e=>{
-                    if(e.isIntersecting) {
-                        e.target.style.transform = 'translateY(0)';
-                        e.target.style.opacity = '1';
-                        obs.unobserve(e.target);
-                    }
-                });
-            }, {threshold: .15});
-            els.forEach(el=>{
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(18px)';
-                el.style.transition = 'all .6s ease-out';
-                obs.observe(el);
-            });
-        })();
+  <!-- ══ MAP ══ -->
+  <section class="map-section">
+    <div class="section-wrap">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3541.1432760685357!2d75.77371307452302!3d11.25473805019014!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba65f34a1d596ed%3A0x3c8107705fec79d2!2sFinjet%20Corporate%20advisors%20Pvt%20Ltd!5e1!3m2!1sen!2sin!4v1762854708374!5m2!1sen!2sin"
+        allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+        title="FinJet Office Location"></iframe>
+    </div>
+  </section>
 
-        // EMI Calculator
-        (function(){
-            const loan = document.getElementById('loan');
-            const rate = document.getElementById('rate');
-            const months = document.getElementById('months');
-            const emi = document.getElementById('emi');
+  <!-- ══ FOOTER ══ -->
+  <footer id="footer" class="site-footer">
+    <div class="footer-inner">
 
-            function calculate() {
-                const P = parseFloat(loan.value) || 0;
-                const R = parseFloat(rate.value) || 0;
-                const N = parseFloat(months.value) || 0;
-                if(P>0 && R>0 && N>0){
-                    const monthlyRate = R / 12 / 100;
-                    const factor = Math.pow(1 + monthlyRate, N);
-                    const E = (P * monthlyRate * factor) / (factor - 1);
-                    emi.value = "₹ " + E.toFixed(2);
-                } else {
-                    emi.value = "";
+      <div class="footer-brand">
+        <div class="logo-wrap">
+          <img src="Home/FINJET LOGO AI-1.jpg" alt="FinJet" onerror="this.style.display='none'"/>
+          <div style="font-family:var(--font-display);font-size:28px;font-weight:700;color:#C0112B;margin-top:4px;">FinJet</div>
+        </div>
+        <p>India's premier destination for car loans, personal loans, and business finance. Your trust is our most valued asset.</p>
+        <div class="social-links" style="margin-top:18px">
+          <a href="https://www.facebook.com/p/Finjet-Corporate-Advisors-Pvt-Ltd-100067485128393/" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M22 12.07C22 6.48 17.52 2 11.93 2S2 6.48 2 12.07C2 17.04 5.66 21.13 10.44 21.9v-6.26H7.9v-2.57h2.54V9.5c0-2.5 1.49-3.88 3.77-3.88 1.09 0 2.23.2 2.23.2v2.45h-1.25c-1.23 0-1.61.77-1.61 1.56v1.87h2.74l-.44 2.57h-2.3V21.9C18.34 21.13 22 17.04 22 12.07z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/finjetofficial/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5H7zm5 5.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5zm6.5-.9a1.1 1.1 0 1 1-1.1 1.1 1.1 1.1 0 0 1 1.1-1.1zM12 9.5A2.5 2.5 0 1 0 14.5 12 2.5 2.5 0 0 0 12 9.5z"/></svg>
+          </a>
+          <a href="https://wa.me/918714570666" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24"><path d="M20.52 3.48A11.95 11.95 0 0 0 12 0C5.37 0 .04 5.33.04 11.96c0 2.11.55 4.16 1.6 5.97L0 24l6.3-1.63a12 12 0 0 0 5.7 1.43c6.63 0 11.96-5.33 11.96-11.96 0-3.19-1.24-6.19-3.44-8.82zM12 21.6c-1.85 0-3.66-.5-5.24-1.45l-.37-.22-3.74.97.99-3.64-.24-.38A8.28 8.28 0 0 1 3.72 9.2 8.28 8.28 0 0 1 12 3.6c4.58 0 8.28 3.7 8.28 8.28S16.58 20.16 12 20.16z"/></svg>
+          </a>
+          <a href="mailto:info@finjet.com" aria-label="Email">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h6>Loan Products</h6>
+        <ul>
+          <li><a href="#">New Car Loans</a></li>
+          <li><a href="#">Used Car Loans</a></li>
+          <li><a href="#">Personal Loans</a></li>
+          <li><a href="#">Business Loans</a></li>
+          <li><a href="#">Doctors Loans</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h6>Contact Us</h6>
+        <ul>
+          <li><a href="tel:+919539577060" style="color:#fff;font-weight:500">+91 95395 77060</a></li>
+          <li>Mon–Sat, 9:30 am – 5:30 pm</li>
+          <li><a href="mailto:info@finjet.com">info@finjet.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h6>Our Office</h6>
+        <address>
+          M Sons Building, 3rd Floor<br/>
+          Cherooty Road<br/>
+          Calicut – 673001<br/>
+          Kerala, India
+        </address>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom section-wrap" style="padding-left:0;padding-right:0">
+      <p>&copy; <span id="yr"></span> Finjet Corporate Advisors Pvt Ltd. All rights reserved.</p>
+      <div class="footer-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Disclaimer</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // ── Dynamic copyright year ──
+    document.getElementById('yr').textContent = new Date().getFullYear();
+
+    // ── Navbar scroll effect ──
+    const topbar = document.getElementById('topbar');
+    window.addEventListener('scroll', () => {
+      topbar.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // ── Animated counters ──
+    function animateCounter(el) {
+      const target = parseInt(el.dataset.target);
+      const suffix = target >= 98 ? '%' : target >= 1000 ? '+' : '+';
+      const duration = 1800;
+      const step = target / (duration / 16);
+      let current = 0;
+      const timer = setInterval(() => {
+        current = Math.min(current + step, target);
+        el.textContent = (target >= 1000 ? Math.round(current).toLocaleString('en-IN') : Math.round(current)) + suffix;
+        if (current >= target) clearInterval(timer);
+      }, 16);
+    }
+
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          animateCounter(e.target);
+          statsObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.stat-num').forEach(el => statsObserver.observe(el));
+
+    // ── Scroll reveal ──
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // ── EMI Calculator with Chart ──
+    (function() {
+      const loanSlider   = document.getElementById('loanSlider');
+      const rateSlider   = document.getElementById('rateSlider');
+      const tenureSlider = document.getElementById('tenureSlider');
+
+      let emiChart;
+
+      function fmt(n) {
+        if (n >= 100000) return '₹' + (n/100000).toFixed(1) + 'L';
+        if (n >= 1000)   return '₹' + (n/1000).toFixed(1) + 'K';
+        return '₹' + n.toFixed(0);
+      }
+
+      function fmtFull(n) {
+        return '₹' + Math.round(n).toLocaleString('en-IN');
+      }
+
+      function calculate() {
+        const P = parseFloat(loanSlider.value);
+        const R = parseFloat(rateSlider.value);
+        const N = parseFloat(tenureSlider.value);
+
+        document.getElementById('loanDisplay').textContent   = fmtFull(P);
+        document.getElementById('rateDisplay').textContent   = R + '% p.a.';
+        document.getElementById('tenureDisplay').textContent = N + ' months';
+
+        const monthlyRate = R / 12 / 100;
+        const factor = Math.pow(1 + monthlyRate, N);
+        const emi = (P * monthlyRate * factor) / (factor - 1);
+        const totalPayable = emi * N;
+        const totalInterest = totalPayable - P;
+
+        document.getElementById('emiDisplay').textContent      = Math.round(emi).toLocaleString('en-IN');
+        document.getElementById('legendPrincipal').textContent = fmtFull(P);
+        document.getElementById('legendInterest').textContent  = fmtFull(totalInterest);
+        document.getElementById('totalPayable').textContent    = fmt(totalPayable);
+        document.getElementById('totalInterestPill').textContent = fmt(totalInterest);
+        document.getElementById('savingPill').textContent      = R + '%';
+
+        // Update chart
+        if (emiChart) {
+          emiChart.data.datasets[0].data = [P, totalInterest];
+          emiChart.update('active');
+        } else {
+          const ctx = document.getElementById('emiChart').getContext('2d');
+          emiChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+              labels: ['Principal', 'Interest'],
+              datasets: [{
+                data: [P, totalInterest],
+                backgroundColor: ['#C0112B', '#C9A84C'],
+                borderColor: ['#0B1629'],
+                borderWidth: 3,
+                hoverOffset: 8,
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: true,
+              cutout: '72%',
+              plugins: {
+                legend: { display: false },
+                tooltip: {
+                  callbacks: {
+                    label: ctx => ' ' + fmtFull(ctx.parsed)
+                  }
                 }
+              }
             }
+          });
+        }
+      }
 
-            [loan, rate, months].forEach(el=>el && el.addEventListener('input', calculate));
-        })();
-    </script>
+      [loanSlider, rateSlider, tenureSlider].forEach(el => el.addEventListener('input', calculate));
+      calculate();
+    })();
 
-    <!-- Optional: Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    // ── Reviews scroll navigation ──
+    function scrollReviews(dir) {
+      const track = document.getElementById('reviewsTrack');
+      track.scrollBy({ left: dir * 340, behavior: 'smooth' });
+    }
+  </script>
 </body>
 </html>
