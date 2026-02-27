@@ -1,3 +1,1005 @@
-<div class="brand">
-    <img src="path/to/finjet-logo.png" alt="FinJet Logo" style="display: block; margin: 0 auto; max-width: 100%; height: auto; filter: brightness(1.2);">
-</div>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FinJet — Home</title>
+
+    <!-- Bootstrap (optional, used for grid + utilities) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        /* ---------------- Reset / Base ---------------- */
+        :root {
+            --primary: #d90429; /* Red */
+            --primary-dark: #a0031f; /* Darker Red */
+            --navy: #071025; /* Navy Blue */
+            --ink: #0f1724; /* Deep Navy/Black */
+            --muted: #9aa3b2;
+            --card-bg: #0f1724; /* deep card bg for premium dark feel */
+            --glass: rgba(255,255,255,0.04);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html, body {
+            height: 100%;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            color: #eef2f7;
+            background: var(--navy);
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        img {
+            max-width: 100%;
+            display: block
+        }
+
+        /* ------------- Video Background ------------- */
+        .hero-viewport {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding-top: 80px; /* space for fixed navbar */
+        }
+
+        .bg-video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            filter: brightness(0.45);
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(2,6,23,0.55), rgba(0,0,0,0.65));
+            z-index: 1;
+        }
+
+        /* ------------- Navbar ------------- */
+        .topbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 28px;
+            background: #fff !important; /* Force solid white */
+            z-index: 40;
+            border-bottom: 1px solid #e5e7eb;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+            .brand .logo {
+                width: 140px;
+                height: auto;
+                border-radius: 8px;
+                background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+                padding: 6px;
+            }
+
+            .brand .tag {
+                color: var(--primary);
+                font-weight: 700;
+                font-size: 14px;
+                letter-spacing: 0.2px;
+            }
+
+        /* container that will collapse on smaller screens */
+        .nav-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 18px;
+            align-items: center;
+        }
+
+            .nav-links a {
+                 color: #111 !important; /* Force black text */
+                font-weight: 600;
+                font-size: 14px;
+                padding: 8px 10px;
+                border-radius: 6px;
+                transition: all .15s;
+                background: transparent !important;
+            }
+
+                .nav-links a:hover {
+                     background: #f3f3f3 !important;
+                     color: var(--primary) !important;
+                }
+
+        /* toggler button (visible on < large) */
+        .nav-toggle {
+            display: none; /* shown via responsive rule */
+            background: transparent;
+            border: none;
+            padding: 6px;
+            cursor: pointer;
+            color: #111;
+            height: 44px;
+            width: 44px;
+            border-radius: 8px;
+        }
+
+        .nav-toggle svg {
+            width: 22px;
+            height: 22px;
+            display: block;
+        }
+
+        /* small / medium screens: use collapse behavior */
+        @media (max-width:991px) {
+            .nav-toggle {
+                display: block;
+            }
+
+            /* rely on bootstrap collapse class toggling .show; default hidden */
+            .nav-container.collapse {
+                display: none;
+            }
+
+            /* when expanded show as column menu anchored below the topbar */
+            .nav-container.collapse.show {
+                display: flex;
+                position: absolute;
+                top: 72px;
+                left: 0;
+                right: 0;
+                background: #fff;
+                padding: 12px 18px;
+                box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+                border-bottom: 1px solid #e5e7eb;
+                z-index: 39;
+                flex-direction: column;
+                align-items: flex-end; /* align link items to right side of the screen */
+                gap: 8px;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-end;
+            }
+
+            .brand .logo {
+                width: 110px
+            }
+        }
+
+        /* large screens: always show inline nav and hide toggler */
+        @media (min-width:992px) {
+            .nav-toggle {
+                display: none !important;
+            }
+
+            .nav-container {
+                position: static !important;
+                display: flex !important;
+                flex-direction: row !important;
+            }
+
+            .nav-links {
+                flex-direction: row;
+                gap: 18px;
+            }
+        }
+
+        /* small screens: stack nav (legacy rules preserved) */
+        @media (max-width:900px) {
+            .nav-links {
+                gap: 10px;
+                flex-wrap: wrap
+            }
+
+            .brand .logo {
+                width: 110px
+            }
+        }
+
+        /* ------------- Hero Content ------------- */
+        .hero-content {
+            position: relative;
+            z-index: 5;
+            max-width: 1100px;
+            padding: 48px 20px;
+            text-align: center;
+            color: #fff;
+        }
+
+            .hero-content h1 {
+                font-size: 40px;
+                line-height: 1.05;
+                margin-bottom: 14px;
+                color: #fff;
+                font-weight: 700;
+                text-shadow: 0 6px 30px rgba(0,0,0,0.6)
+            }
+
+            .hero-content p {
+                color: #e7edf6;
+                opacity: 0.9;
+                margin-bottom: 22px;
+                font-size: 18px;
+            }
+
+        .hero-cta {
+            display: inline-flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .btn-primary-gold {
+            background: linear-gradient(180deg,var(--primary), var(--primary-dark));
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 800;
+            box-shadow: 0 10px 30px rgba(217,4,41,0.12);
+        }
+
+            .btn-primary-gold:hover {
+                transform: translateY(-2px)
+            }
+
+        /* ------------- Features Section ------------- */
+        .features {
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            padding: 60px 20px;
+            color: #ecf3fb;
+        }
+
+            .features .wrap {
+                max-width: 1200px;
+                margin: 0 auto
+            }
+
+            .features h2 {
+                color: var(--primary);
+                font-size: 24px;
+                margin-bottom: 18px;
+                text-align: center
+            }
+
+        .feature-cards {
+            display: flex;
+            gap: 22px;
+            justify-content: center;
+            align-items: stretch;
+            flex-wrap: wrap;
+            margin-top: 18px;
+        }
+
+        .feature-card {
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            border: 1px solid rgba(255,255,255,0.03);
+            padding: 22px;
+            border-radius: 12px;
+            width: 260px;
+            box-shadow: 0 8px 30px rgba(4,6,14,0.5);
+            text-align: left;
+        }
+
+            .feature-card h3 {
+                color: #fff;
+                font-size: 18px;
+                margin-bottom: 8px
+            }
+
+            .feature-card p {
+                color: var(--muted);
+                font-size: 14px;
+                line-height: 1.4
+            }
+
+        /* ------------- Partners ------------- */
+        .partners {
+            padding: 48px 18px
+        }
+
+            .partners .wrap {
+                max-width: 1200px;
+                margin: 0 auto
+            }
+
+            .partners h2 {
+                color: var(--primary);
+                text-align: center;
+                margin-bottom: 20px
+            }
+
+        .logo-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4 columns */
+            gap: 18px;
+            align-items: center;
+            justify-items: center;
+            padding: 12px;
+            background: transparent;
+        }
+
+            .logo-grid a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                max-width: 160px; /* prevents extremely large boxes on wide screens */
+                height: 84px; /* fixed box height so every tile aligns */
+                padding: 8px;
+                border-radius: 8px;
+                background: white;
+                border: 1px white;
+                box-sizing: border-box;
+            }
+
+            .logo-grid img {
+                max-width: 100%;
+                max-height: 60px; /* emblem height; keeps aspect ratio */
+                object-fit: contain;
+                display: block;
+            }
+
+        /* Responsive: collapse to 2 columns on narrow screens */
+        @media (max-width: 900px) {
+            .logo-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .logo-grid a {
+                max-width: 220px;
+                height: 72px;
+            }
+
+            .logo-grid img {
+                max-height: 48px;
+            }
+        }
+
+        /* ------------- EMI Section ------------- */
+        .emi-section {
+            padding: 52px 18px;
+            background: linear-gradient(180deg, rgba(0,0,0,0.32), rgba(0,0,0,0.2))
+        }
+
+        .emi-wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            gap: 28px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center
+        }
+
+        .emi-box {
+            width: 380px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            padding: 22px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.03);
+        }
+
+            .emi-box label {
+                display: block;
+                font-weight: 700;
+                color: #fff;
+                margin-top: 12px;
+                margin-bottom: 6px;
+                font-size: 14px
+            }
+
+            .emi-box input[type=number], .emi-box input[type=text] {
+                width: 100%;
+                padding: 10px;
+                border-radius: 8px;
+                border: 1px solid rgba(255,255,255,0.06);
+                background: transparent;
+                color: #fff;
+            }
+
+        .emi-vid {
+            width: 420px;
+            height: 300px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 1px solid rgba(255,255,255,0.04);
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+        }
+
+        /* ------------- Services ------------- */
+        .services {
+            padding: 48px 18px
+        }
+
+            .services h2 {
+                color: var(--primary);
+                text-align: center;
+                margin-bottom: 20px
+            }
+
+        .services-grid {
+            display: grid;
+            gap: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+
+            /* responsive automatic columns:
+               - minimum column width 180px so 5 items can fit on wide screens,
+               - each column grows equally (1fr) */
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        }
+
+        /* Force 5 equal columns on very wide viewports (optional, guarantees single-row for 5 items) */
+        @media (min-width: 1400px) {
+            .services-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+
+        /* medium screens -> 2 columns */
+        @media (max-width: 1100px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* small screens -> 1 column */
+        @media (max-width: 600px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .service-card {
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.03)
+        }
+
+            .service-card h3 {
+                color: #fff;
+                margin-bottom: 8px
+            }
+
+            .service-card p {
+                color: var(--muted);
+                font-size: 14px;
+                line-height: 1.5
+            }
+
+        /* ------------- Reviews ------------- */
+        .reviews {
+            padding: 36px 18px;
+            background: linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.06))
+        }
+
+            .reviews .wrap {
+                max-width: 1100px;
+                margin: 0 auto
+            }
+
+        .review-track {
+            display: flex;
+            gap: 14px;
+            overflow-x: auto;
+            padding: 18px 6px
+        }
+
+        .review-card {
+            min-width: 260px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            padding: 18px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.03)
+        }
+
+            .review-card p {
+                color: var(--muted);
+                margin-top: 8px
+            }
+
+        /* ------------- Map ------------- */
+        .map {
+            padding: 30px 18px
+        }
+
+            .map iframe {
+                width: 100%;
+                height: 420px;
+                border-radius: 10px;
+                border: 0
+            }
+
+        /* ------------- Footer ------------- */
+        .site-footer {
+            padding: 22px 18px;
+            background: #050713;
+            color: #cbd5e1;
+            text-align: left;                /* changed: left align footer text */
+            border-top: 1px solid rgba(217,4,41,0.08);
+            font-size: 14px;                 /* decreased base footer text size */
+        }
+
+            .site-footer a {
+                color: var(--primary);
+                margin: 0 8px;
+                font-weight: 600
+            }
+
+            /* Social icons block in footer */
+            .site-footer .social-links {
+                display: flex;
+                gap: 8px;                      /* slightly reduced gap */
+                justify-content: flex-start;   /* left-aligned social icons */
+                align-items: center;
+                margin-top: 8px;               /* reduced top spacing */
+            }
+
+            .site-footer .social-links a {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 28px;                   /* slightly smaller icons box */
+                height: 28px;
+                border-radius: 6px;
+                background: #000; /* solid black background */
+                color: #fff;      /* white icon color */
+                text-decoration: none;
+                transition: transform .14s ease, box-shadow .14s ease, background .14s ease;
+                border: none;
+                padding: 0;
+            }
+
+            .site-footer .social-links a:hover {
+                transform: translateY(-3px);
+                background: #111;
+                box-shadow: 0 8px 22px rgba(0,0,0,0.35);
+            }
+
+            .site-footer .social-links svg {
+                width: 16px;                   /* slightly smaller svg */
+                height: 16px;
+                fill: currentColor;
+                display: block;
+            }
+
+            /* footer grid spacing / alignment */
+            .site-footer .container-center {
+                max-width: 1100px;
+                margin: 0 auto;
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+
+            .site-footer .row.align-top {
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .site-footer h6 {
+                color: var(--primary);
+                font-weight: 700;
+                margin-bottom: 0.4rem;         /* reduced spacing */
+                font-size: 0.95rem;            /* slightly smaller heading */
+            }
+
+            .site-footer ul {
+                padding-left: 0;
+                margin: 0;
+                list-style: none;
+            }
+
+            .site-footer ul li {
+                margin-bottom: 0.28rem;        /* decreased vertical spacing */
+                color: #cbd5e1;
+                line-height: 1.35;             /* tighter line height */
+                font-size: 0.92rem;            /* decreased list text size */
+            }
+
+            .site-footer address {
+                font-style: normal;
+                color: #cbd5e1;
+                line-height: 1.35;             /* tighter address */
+                margin-bottom: 0.15rem;
+                font-size: 0.92rem;
+            }
+
+        /* ------------- Utilities ------------- */
+        .container-center {
+            max-width: 1100px;
+            margin: 0 auto
+        }
+
+        @media (max-width:880px) {
+            .hero-content h1 {
+                font-size: 28px
+            }
+
+            .emi-vid {
+                width: 100%;
+                height: 220px
+            }
+
+            .emi-box {
+                width: 100%
+            }
+
+            .brand .logo {
+                width: 95px
+            }
+
+            .logo-grid img {
+                max-width: 100px
+            }
+
+            /* footer responsive adjustments */
+            .site-footer .row.align-top {
+                gap: 0.75rem;
+            }
+
+            .site-footer .social-links {
+                justify-content: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fixed Topbar -->
+    <header class="topbar" role="banner" aria-label="Primary navigation">
+        <div class="brand">
+            <img src="Home/FINJET LOGO AI-1.jpg" alt="FinJet logo" class="logo" />
+            <div class="tag">Your Trust, Our Commitment</div>
+        </div>
+
+        <!-- Toggler: visible on < large screens -->
+        <button class="nav-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 6h18v2H3zM3 11h18v2H3zM3 16h18v2H3z"/></svg>
+        </button>
+
+        <!-- Collapsible nav: shown on large screens, collapses on smaller -->
+        <div id="mainNav" class="nav-container collapse" aria-label="Main links container">
+            <nav class="nav-links" aria-label="Main links">
+                <a href="#servi">Our Services</a>
+                <a href="#emi-section">EMI Calculator</a>
+                <a href="#foot">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero / Video Banner -->
+    <section class="hero-viewport" role="region" aria-label="Hero">
+        <video class="bg-video" autoplay muted loop playsinline>
+            <source src="Videos/Home/FINJET.mp4" type="video/mp4" />
+        </video>
+        <div class="overlay" aria-hidden="true"></div>
+
+        <div class="hero-content container-center">
+            <h1>India's Top destination for Car loans</h1>
+            <p>Your Trust, Our Commitment. Your Success, Our Mission.</p>
+
+            <!-- <div class="hero-cta">
+                <a class="btn-primary-gold" href=@Url.Action("ApplyLoan","Home")>Apply for Car Loan</a>
+            </div> -->
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section  class="features" aria-labelledby="why-choose">
+        <div class="wrap container-center">
+            <h2 id="why-choose">Why Choose Us?</h2>
+
+            <div class="feature-cards" role="list">
+                <article class="feature-card" role="listitem">
+                    <h3>Multiple Loan Options in One Place</h3>
+                    <p>Customers can compare offers from different banks and NBFCs without visiting each institution separately.</p>
+                </article>
+
+                <article class="feature-card" role="listitem">
+                    <h3>Personalised Loan Guidance</h3>
+                    <p>Advisors help customers choose the right product based on income, credit score, and repayment capacity.</p>
+                </article>
+
+                <article class="feature-card" role="listitem">
+                    <h3>Error-Free Documentation</h3>
+                    <p>Experts review customer documents to reduce rejection chances and avoid repeated bank visits.</p>
+                </article>
+
+                <article class="feature-card" role="listitem">
+                    <h3>Safe and Secure Process</h3>
+                    <p>Documents are handled through verified channels, reducing fraud and ensuring data security.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners -->
+    <section class="partners" aria-labelledby="partners-heading">
+        <div class="wrap container-center">
+            <h2 id="partners-heading">Our Trusted Partners</h2>
+
+            <div class="logo-grid" role="list" aria-label="Partner logos">
+                <a href="#" role="listitem" aria-label="Partner 1"><img src="Home/img1.png" alt="Partner 1"></a>
+                <a href="#" role="listitem" aria-label="Partner 2"><img src="Home/img2.png" alt="Partner 2"></a>
+                <a href="#" role="listitem" aria-label="Partner 3"><img src="Home/img3.png" alt="Partner 3"></a>
+                <a href="#" role="listitem" aria-label="Partner 4"><img src="Home/img4.png" alt="Partner 4"></a>
+
+                <a href="#" role="listitem" aria-label="Partner 5"><img src="Home/img5.png" alt="Partner 5"></a>
+                <a href="#" role="listitem" aria-label="Partner 6"><img src="Home/img6.png" alt="Partner 6"></a>
+                <a href="#" role="listitem" aria-label="Partner 7"><img src="Home/img7.png" alt="Partner 7"></a>
+                <a href="#" role="listitem" aria-label="Partner 8"><img src="Home/img8.png" alt="Partner 8"></a>
+
+                <a href="#" role="listitem" aria-label="Partner 9"><img src="Home/img9.png" alt="Partner 9"></a>
+                <a href="#" role="listitem" aria-label="Partner 10"><img src="Home/img10.png" alt="Partner 10"></a>
+                <a href="#" role="listitem" aria-label="Partner 11"><img src="Home/img11.png" alt="Partner 11"></a>
+                <a href="#" role="listitem" aria-label="Partner 12"><img src="Home/img12.png" alt="Partner 12"></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- EMI Calculator -->
+    <section id="emi-section" class="emi-section" aria-labelledby="emi-heading">
+        <div class="emi-wrap">
+            <div class="emi-box" aria-labelledby="emi-heading">
+                <h2 id="emi-heading" style="color:var(--primary);margin-bottom:6px">EMI Calculator</h2>
+
+                <label for="loan">Loan Amount (₹)</label>
+                <input type="number" id="loan" placeholder="Enter loan amount">
+
+                <label for="rate">Interest Rate (% per annum)</label>
+                <input type="number" id="rate" placeholder="Enter interest rate">
+
+                <label for="months">Loan Tenure (Months)</label>
+                <input type="number" id="months" placeholder="Enter number of months">
+
+                <label for="emi">Monthly EMI (₹)</label>
+                <input type="text" id="emi" readonly placeholder="₹ 0.00" style="font-weight:700">
+            </div>
+
+            <video class="emi-vid" autoplay muted loop playsinline>
+                <source src="Videos/Home/EMICALC.mp4" type="video/mp4" />
+            </video>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section id="servi" class="services" aria-labelledby="services-heading">
+        <h2 id="services-heading">Our Services</h2>
+
+        <div class="services-grid container-center">
+            <div class="service-card">
+                <h3>New Car Loans</h3>
+                <p>Buying your dream car is now simple and stress-free. Our New Car Loans offer competitive rates, flexible repayment options, and quick approvals</p>
+            </div>
+
+            <div class="service-card">
+                <h3>Used Car Loans</h3>
+                <p>Upgrade your ride effortlessly with our Used Car Loans. Enjoy quick approvals, low interest rates, and flexible EMIs — making it easy to own a quality pre-owned car without financial strain.</p>
+            </div>
+
+            <div class="service-card">
+                <h3>Personal Loans</h3>
+                <p>Fulfill your goals with our hassle-free Personal Loans. Get quick approvals, flexible repayment options, and competitive interest rates to manage your expenses with ease and confidence.</p>
+            </div>
+
+            <div class="service-card">
+                <h3>Business Loans</h3>
+                <p>Empower your business growth with our flexible Business Loans. Access quick funding, low interest rates, and customizable repayment plans to expand, invest, or manage operations with ease.</p>
+            </div>
+
+            <div class="service-card">
+                <h3>Doctors Loans</h3>
+                <p>Advance your medical practice with our exclusive Doctors Loans. Get quick approvals, attractive interest rates, and flexible repayment options to expand your clinic, upgrade equipment, or manage professional expenses with ease.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews -->
+    <section class="reviews" aria-labelledby="reviews-heading">
+        <div class="wrap container-center">
+            <h2 id="reviews-heading" style="color:var(--primary);margin-bottom:12px">Real Stories from our valued customers</h2>
+
+            <div class="review-track" role="list">
+                <div class="review-card" role="listitem">
+                    <strong>⭐⭐⭐⭐⭐</strong>
+                    <p>Excellent service! Fast and transparent loan processing.</p>
+                    <small>- Sretha P</small>
+                </div>
+
+                <div class="review-card" role="listitem">
+                    <strong>⭐⭐⭐⭐⭐</strong>
+                    <p>Very professional advisors. Helped me get the lowest interest rate.</p>
+                    <small>- Sneha Suresh</small>
+                </div>
+
+                <div class="review-card" role="listitem">
+                    <strong>⭐⭐⭐⭐⭐</strong>
+                    <p>Finjet provides excellent service with minimal documentation required. They offer fast approvals and competitive, low interest rates, making the loan process smooth and hassle-free.</p>
+                    <small>- Athul M KKR</small>
+                </div>
+
+                <div class="review-card" role="listitem">
+                    <strong>⭐⭐⭐⭐⭐</strong>
+                    <p>Excellent service and great customer support. Thanks carloan guys.</p>
+                    <small>- Praveen Rajan</small>
+                </div>
+
+                <div class="review-card" role="listitem">
+                    <strong>⭐⭐⭐⭐⭐</strong>
+                    <p>Seamless process from start to finish. Great team!</p>
+                    <small>- Rajesh Kumar</small>
+                </div>
+
+                <div class="review-card" role="listitem">
+                    <strong>⭐⭐⭐⭐⭐</strong>
+                    <p>Great Service,Thank you Team FinJet</p>
+                    <small>- Reshmi K P</small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map -->
+    <section class="map" aria-label="Map">
+        <div class="container-center">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3541.1432760685357!2d75.77371307452302!3d11.25473805019014!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba65f34a1d596ed%3A0x3c8107705fec79d2!2sFinjet%20Corporate%20advisors%20Pvt%20Ltd!5e1!3m2!1sen!2sin!4v1762854708374!5m2!1sen!2sin"
+                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="foot" class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-3">
+                    <h6 style="padding-left:10px">Loans</h6>
+                    <ul class="list-unstyled mb-0">
+                        <li><a href="@Url.Action("ApplyLoan", "Home")" style="color:inherit;text-decoration:none;">New Car Loans</a></li>
+                        <li><a href="@Url.Action("ApplyLoan", "Home")" style="color:inherit;text-decoration:none;">Used Car Loans</a></li>
+                        <li><a href="@Url.Action("ApplyLoan", "Home")" style="color:inherit;text-decoration:none;">Personal Loans</a></li>
+                        <li><a href="@Url.Action("ApplyLoan", "Home")" style="color:inherit;text-decoration:none;">Business Loans</a></li>
+                        <li><a href="@Url.Action("ApplyLoan", "Home")" style="color:inherit;text-decoration:none;">Doctors Loans</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-3">
+                    <h6>Need consultation?</h6>
+                    <ul class="list-unstyled mb-0">
+                        <li>Call now: <a href="tel:+919539577060" style="color:white;font-weight:600;text-decoration:none;">+91 95395 77060</a></li>
+                        <li>Mon-Sat,9.30am - 5.30pm</li>
+                    </ul>
+                </div>
+
+                <div class="col-3">
+                    <h6>Corporate Office Address</h6>
+                    <address>
+                        M Sons Building<br />
+                        3rd Floor<br />
+                        Cherooty Road<br />
+                        Calicut - 673001<br />
+                        Kerala, India
+                    </address>
+                </div>
+
+                <div class="col-3">
+                    <h6>Connect with us on</h6>
+                    <div class="social-links" role="list" aria-label="Social links">
+                        <a role="listitem" aria-label="Facebook" href="https://www.facebook.com/p/Finjet-Corporate-Advisors-Pvt-Ltd-100067485128393/" target="_blank" rel="noopener noreferrer">
+                            <!-- Facebook SVG -->
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M22 12.07C22 6.48 17.52 2 11.93 2S2 6.48 2 12.07C2 17.04 5.66 21.13 10.44 21.9v-6.26H7.9v-2.57h2.54V9.5c0-2.5 1.49-3.88 3.77-3.88 1.09 0 2.23.2 2.23.2v2.45h-1.25c-1.23 0-1.61.77-1.61 1.56v1.87h2.74l-.44 2.57h-2.3V21.9C18.34 21.13 22 17.04 22 12.07z" /></svg>
+                        </a>
+
+                        <a role="listitem" aria-label="Instagram" href="https://www.instagram.com/finjetofficial/" target="_blank" rel="noopener noreferrer">
+                            <!-- Instagram SVG -->
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5H7zm5 5.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5zm6.5-.9a1.1 1.1 0 1 1-1.1 1.1 1.1 1.1 0 0 1 1.1-1.1zM12 9.5A2.5 2.5 0 1 0 14.5 12 2.5 2.5 0 0 0 12 9.5z" /></svg>
+                        </a>
+
+                        <a role="listitem" aria-label="WhatsApp" href="https://wa.me/918714570666?text=to%20know%20more%20about%20Finjet%20services%20chat%20with%20our%20executive%20right%20now" target="_blank" rel="noopener noreferrer">
+                            <!-- WhatsApp SVG -->
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.52 3.48A11.95 11.95 0 0 0 12 0C5.37 0 .04 5.33.04 11.96c0 2.11.55 4.16 1.6 5.97L0 24l6.3-1.63a12 12 0 0 0 5.7 1.43c6.63 0 11.96-5.33 11.96-11.96 0-3.19-1.24-6.19-3.44-8.82zM12 21.6c-1.85 0-3.66-.5-5.24-1.45l-.37-.22-3.74.97.99-3.64-.24-.38A8.28 8.28 0 0 1 3.72 9.2 8.28 8.28 0 0 1 12 3.6c4.58 0 8.28 3.7 8.28 8.28S16.58 20.16 12 20.16zM16.27 14.6c-.26-.13-1.54-.76-1.78-.85-.24-.08-.41-.13-.58.13-.17.26-.65.85-.8 1.02-.15.17-.29.19-.55.06-.26-.13-1.1-.4-2.1-1.29-.78-.69-1.3-1.55-1.45-1.81-.15-.26-.02-.4.11-.53.11-.11.26-.29.39-.44.13-.15.17-.26.26-.43.09-.17.04-.32-.02-.45-.06-.13-.58-1.4-.79-1.92-.21-.5-.43-.43-.58-.44-.15-.01-.32-.01-.5-.01-.17 0-.45.06-.69.32-.24.26-.91.89-.91 2.17 0 1.28.93 2.52 1.06 2.69.13.17 1.85 2.88 4.48 3.93 2.63 1.05 2.63.7 3.1.66.47-.04 1.53-.62 1.75-1.22.22-.6.22-1.11.15-1.22-.07-.11-.26-.17-.52-.3z" /></svg>
+                        </a>
+
+                        <a role="listitem" aria-label="Email" href="mailto:info@finjet.com" target="_blank" rel="noopener noreferrer">
+                            <!-- Email / Envelope SVG -->
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" /></svg>
+                        </a>
+                    </div>
+                    <br />
+                    <h6><a href="#">Privacy Policy</a></h6>
+                    <h6><a href="#">Terms of Use</a></h6>
+                  
+
+                </div>
+
+            </div>
+                  
+        </div>
+        <br /> <br /> <br /><br /> <br />
+
+        <div class="mt-3" style="text-align:left;color:#cbd5e1;font-weight:500">&copy; Finjet Corporate Advisors Pvt Ltd 2019</div>
+       
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Intersection animation: add .show when in view
+        (function(){
+            const els = document.querySelectorAll('.slide-up-scroll, .feature-card, .service-card, .review-card, .logo-grid a');
+            const obs = new IntersectionObserver((entries)=>{
+
+                entries.forEach(e=>{
+
+                    if(e.isIntersecting) {
+                        e.target.style.transform = 'translateY(0)';
+                        e.target.style.opacity = '1';
+                        obs.unobserve(e.target);
+                    }
+                });
+            }, {threshold: .15});
+            els.forEach(el=>{
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(18px)';
+                el.style.transition = 'all .6s ease-out';
+                obs.observe(el);
+            });
+        })();
+
+        // EMI Calculator
+        (function(){
+            const loan = document.getElementById('loan');
+            const rate = document.getElementById('rate');
+            const months = document.getElementById('months');
+            const emi = document.getElementById('emi');
+
+            function calculate() {
+                const P = parseFloat(loan.value) || 0;
+                const R = parseFloat(rate.value) || 0;
+                const N = parseFloat(months.value) || 0;
+                if(P>0 && R>0 && N>0){
+                    const monthlyRate = R / 12 / 100;
+                    const factor = Math.pow(1 + monthlyRate, N);
+                    const E = (P * monthlyRate * factor) / (factor - 1);
+                    emi.value = "₹ " + E.toFixed(2);
+                } else {
+                    emi.value = "";
+                }
+            }
+
+            [loan, rate, months].forEach(el=>el && el.addEventListener('input', calculate));
+        })();
+    </script>
+
+    <!-- Optional: Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
