@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -541,99 +540,141 @@
                 border: 0
             }
 
-        /* ------------- Footer ------------- */
+        /* ============================================
+           FOOTER — fully rebuilt for mobile
+           ============================================ */
         .site-footer {
-            padding: 22px 18px;
+            padding: 40px 0 0;
             background: #050713;
             color: #cbd5e1;
-            text-align: left;                /* changed: left align footer text */
             border-top: 1px solid rgba(217,4,41,0.08);
-            font-size: 14px;                 /* decreased base footer text size */
+            font-size: 14px;
         }
 
-            .site-footer a {
-                color: var(--primary);
-                margin: 0 8px;
-                font-weight: 600
-            }
+        .footer-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+        }
 
-            /* Social icons block in footer */
-            .site-footer .social-links {
-                display: flex;
-                gap: 8px;                      /* slightly reduced gap */
-                justify-content: flex-start;   /* left-aligned social icons */
-                align-items: center;
-                margin-top: 8px;               /* reduced top spacing */
+        /* ---- responsive: 2 columns on tablet ---- */
+        @media (max-width: 900px) {
+            .footer-inner {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 28px 20px;
             }
+        }
 
-            .site-footer .social-links a {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                width: 28px;                   /* slightly smaller icons box */
-                height: 28px;
-                border-radius: 6px;
-                background: #000; /* solid black background */
-                color: #fff;      /* white icon color */
-                text-decoration: none;
-                transition: transform .14s ease, box-shadow .14s ease, background .14s ease;
-                border: none;
-                padding: 0;
+        /* ---- responsive: 1 column on mobile ---- */
+        @media (max-width: 540px) {
+            .footer-inner {
+                grid-template-columns: 1fr;
+                gap: 24px;
             }
+        }
 
-            .site-footer .social-links a:hover {
-                transform: translateY(-3px);
-                background: #111;
-                box-shadow: 0 8px 22px rgba(0,0,0,0.35);
-            }
+        .footer-col h6 {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+        }
 
-            .site-footer .social-links svg {
-                width: 16px;                   /* slightly smaller svg */
-                height: 16px;
-                fill: currentColor;
-                display: block;
-            }
+        .footer-col ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
 
-            /* footer grid spacing / alignment */
-            .site-footer .container-center {
-                max-width: 1100px;
-                margin: 0 auto;
-                padding-left: 18px;
-                padding-right: 18px;
-            }
+        .footer-col ul li {
+            margin-bottom: 6px;
+            color: #cbd5e1;
+            font-size: 0.92rem;
+            line-height: 1.4;
+        }
 
-            .site-footer .row.align-top {
-                align-items: flex-start;
-                gap: 1rem;
-            }
+        .footer-col ul li a {
+            color: inherit;
+            text-decoration: none;
+            transition: color .15s;
+        }
 
-            .site-footer h6 {
-                color: var(--primary);
-                font-weight: 700;
-                margin-bottom: 0.4rem;         /* reduced spacing */
-                font-size: 0.95rem;            /* slightly smaller heading */
-            }
+        .footer-col ul li a:hover {
+            color: var(--primary);
+        }
 
-            .site-footer ul {
-                padding-left: 0;
-                margin: 0;
-                list-style: none;
-            }
+        .footer-col address {
+            font-style: normal;
+            color: #cbd5e1;
+            font-size: 0.92rem;
+            line-height: 1.6;
+        }
 
-            .site-footer ul li {
-                margin-bottom: 0.28rem;        /* decreased vertical spacing */
-                color: #cbd5e1;
-                line-height: 1.35;             /* tighter line height */
-                font-size: 0.92rem;            /* decreased list text size */
-            }
+        /* Social icons */
+        .social-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
 
-            .site-footer address {
-                font-style: normal;
-                color: #cbd5e1;
-                line-height: 1.35;             /* tighter address */
-                margin-bottom: 0.15rem;
-                font-size: 0.92rem;
-            }
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            background: #111;
+            color: #fff;
+            text-decoration: none;
+            transition: transform .14s ease, box-shadow .14s ease, background .14s ease;
+            flex-shrink: 0;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px);
+            background: #222;
+            box-shadow: 0 8px 22px rgba(0,0,0,0.35);
+        }
+
+        .social-links svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+            display: block;
+        }
+
+        .footer-policy-links {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .footer-policy-links a {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.88rem;
+            text-decoration: none;
+        }
+
+        .footer-policy-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Bottom bar */
+        .footer-bottom {
+            margin-top: 32px;
+            padding: 14px 24px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            text-align: left;
+            color: #8a93a6;
+            font-size: 0.82rem;
+            font-weight: 500;
+        }
 
         /* ------------- Utilities ------------- */
         .container-center {
@@ -661,15 +702,6 @@
 
             .logo-grid img {
                 max-width: 100px
-            }
-
-            /* footer responsive adjustments */
-            .site-footer .row.align-top {
-                gap: 0.75rem;
-            }
-
-            .site-footer .social-links {
-                justify-content: flex-start;
             }
         }
     </style>
@@ -707,15 +739,11 @@
         <div class="hero-content container-center">
             <h1>India's Top destination for Car loans</h1>
             <p>Your Trust, Our Commitment. Your Success, Our Mission.</p>
-
-            <!-- <div class="hero-cta">
-                <a class="btn-primary-gold" href=@Url.Action("ApplyLoan","Home")>Apply for Car Loan</a>
-            </div> -->
         </div>
     </section>
 
     <!-- Features -->
-    <section  class="features" aria-labelledby="why-choose">
+    <section class="features" aria-labelledby="why-choose">
         <div class="wrap container-center">
             <h2 id="why-choose">Why Choose Us?</h2>
 
@@ -877,77 +905,76 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- ===== FOOTER (fixed for mobile) ===== -->
     <footer id="foot" class="site-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-3">
-                    <h6 style="padding-left:10px">Loans</h6>
-                    <ul class="list-unstyled mb-0">
-                        <li><a href="@Url.Action("ApplyLoan", "Home")" style="color:inherit;text-decoration:none;">New Car Loans</a></li>
-                        <li><a href="@Url.Action("ApplyLoan", "Home")" style="color:inherit;text-decoration:none;">Used Car Loans</a></li>
-                        <li><a href="@Url.Action("ApplyLoan", "Home")" style="color:inherit;text-decoration:none;">Personal Loans</a></li>
-                        <li><a href="@Url.Action("ApplyLoan", "Home")" style="color:inherit;text-decoration:none;">Business Loans</a></li>
-                        <li><a href="@Url.Action("ApplyLoan", "Home")" style="color:inherit;text-decoration:none;">Doctors Loans</a></li>
-                    </ul>
-                </div>
+        <div class="footer-inner">
 
-                <div class="col-3">
-                    <h6>Need consultation?</h6>
-                    <ul class="list-unstyled mb-0">
-                        <li>Call now: <a href="tel:+919539577060" style="color:white;font-weight:600;text-decoration:none;">+91 95395 77060</a></li>
-                        <li>Mon-Sat,9.30am - 5.30pm</li>
-                    </ul>
-                </div>
-
-                <div class="col-3">
-                    <h6>Corporate Office Address</h6>
-                    <address>
-                        M Sons Building<br />
-                        3rd Floor<br />
-                        Cherooty Road<br />
-                        Calicut - 673001<br />
-                        Kerala, India
-                    </address>
-                </div>
-
-                <div class="col-3">
-                    <h6>Connect with us on</h6>
-                    <div class="social-links" role="list" aria-label="Social links">
-                        <a role="listitem" aria-label="Facebook" href="https://www.facebook.com/p/Finjet-Corporate-Advisors-Pvt-Ltd-100067485128393/" target="_blank" rel="noopener noreferrer">
-                            <!-- Facebook SVG -->
-                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M22 12.07C22 6.48 17.52 2 11.93 2S2 6.48 2 12.07C2 17.04 5.66 21.13 10.44 21.9v-6.26H7.9v-2.57h2.54V9.5c0-2.5 1.49-3.88 3.77-3.88 1.09 0 2.23.2 2.23.2v2.45h-1.25c-1.23 0-1.61.77-1.61 1.56v1.87h2.74l-.44 2.57h-2.3V21.9C18.34 21.13 22 17.04 22 12.07z" /></svg>
-                        </a>
-
-                        <a role="listitem" aria-label="Instagram" href="https://www.instagram.com/finjetofficial/" target="_blank" rel="noopener noreferrer">
-                            <!-- Instagram SVG -->
-                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5H7zm5 5.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5zm6.5-.9a1.1 1.1 0 1 1-1.1 1.1 1.1 1.1 0 0 1 1.1-1.1zM12 9.5A2.5 2.5 0 1 0 14.5 12 2.5 2.5 0 0 0 12 9.5z" /></svg>
-                        </a>
-
-                        <a role="listitem" aria-label="WhatsApp" href="https://wa.me/918714570666?text=to%20know%20more%20about%20Finjet%20services%20chat%20with%20our%20executive%20right%20now" target="_blank" rel="noopener noreferrer">
-                            <!-- WhatsApp SVG -->
-                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.52 3.48A11.95 11.95 0 0 0 12 0C5.37 0 .04 5.33.04 11.96c0 2.11.55 4.16 1.6 5.97L0 24l6.3-1.63a12 12 0 0 0 5.7 1.43c6.63 0 11.96-5.33 11.96-11.96 0-3.19-1.24-6.19-3.44-8.82zM12 21.6c-1.85 0-3.66-.5-5.24-1.45l-.37-.22-3.74.97.99-3.64-.24-.38A8.28 8.28 0 0 1 3.72 9.2 8.28 8.28 0 0 1 12 3.6c4.58 0 8.28 3.7 8.28 8.28S16.58 20.16 12 20.16zM16.27 14.6c-.26-.13-1.54-.76-1.78-.85-.24-.08-.41-.13-.58.13-.17.26-.65.85-.8 1.02-.15.17-.29.19-.55.06-.26-.13-1.1-.4-2.1-1.29-.78-.69-1.3-1.55-1.45-1.81-.15-.26-.02-.4.11-.53.11-.11.26-.29.39-.44.13-.15.17-.26.26-.43.09-.17.04-.32-.02-.45-.06-.13-.58-1.4-.79-1.92-.21-.5-.43-.43-.58-.44-.15-.01-.32-.01-.5-.01-.17 0-.45.06-.69.32-.24.26-.91.89-.91 2.17 0 1.28.93 2.52 1.06 2.69.13.17 1.85 2.88 4.48 3.93 2.63 1.05 2.63.7 3.1.66.47-.04 1.53-.62 1.75-1.22.22-.6.22-1.11.15-1.22-.07-.11-.26-.17-.52-.3z" /></svg>
-                        </a>
-
-                        <a role="listitem" aria-label="Email" href="mailto:info@finjet.com" target="_blank" rel="noopener noreferrer">
-                            <!-- Email / Envelope SVG -->
-                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" /></svg>
-                        </a>
-                    </div>
-                    <br />
-                    <h6><a href="#">Privacy Policy</a></h6>
-                    <h6><a href="#">Terms of Use</a></h6>
-                  
-
-                </div>
-
+            <!-- Col 1: Loans -->
+            <div class="footer-col">
+                <h6>Loans</h6>
+                <ul>
+                    <li><a href="@Url.Action("ApplyLoan", "Home")">New Car Loans</a></li>
+                    <li><a href="@Url.Action("ApplyLoan", "Home")">Used Car Loans</a></li>
+                    <li><a href="@Url.Action("ApplyLoan", "Home")">Personal Loans</a></li>
+                    <li><a href="@Url.Action("ApplyLoan", "Home")">Business Loans</a></li>
+                    <li><a href="@Url.Action("ApplyLoan", "Home")">Doctors Loans</a></li>
+                </ul>
             </div>
-                  
-        </div>
-        <br /> <br /> <br /><br /> <br />
 
-        <div class="mt-3" style="text-align:left;color:#cbd5e1;font-weight:500">&copy; Finjet Corporate Advisors Pvt Ltd 2019</div>
-       
+            <!-- Col 2: Consultation -->
+            <div class="footer-col">
+                <h6>Need consultation?</h6>
+                <ul>
+                    <li>Call now: <a href="tel:+919539577060" style="color:#fff;font-weight:600;">+91 95395 77060</a></li>
+                    <li>Mon–Sat, 9:30 am – 5:30 pm</li>
+                </ul>
+            </div>
+
+            <!-- Col 3: Address -->
+            <div class="footer-col">
+                <h6>Corporate Office Address</h6>
+                <address>
+                    M Sons Building<br />
+                    3rd Floor, Cherooty Road<br />
+                    Calicut – 673001<br />
+                    Kerala, India
+                </address>
+            </div>
+
+            <!-- Col 4: Social + Legal -->
+            <div class="footer-col">
+                <h6>Connect with us</h6>
+                <div class="social-links" role="list" aria-label="Social links">
+                    <!-- Facebook -->
+                    <a role="listitem" aria-label="Facebook" href="https://www.facebook.com/p/Finjet-Corporate-Advisors-Pvt-Ltd-100067485128393/" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12.07C22 6.48 17.52 2 11.93 2S2 6.48 2 12.07C2 17.04 5.66 21.13 10.44 21.9v-6.26H7.9v-2.57h2.54V9.5c0-2.5 1.49-3.88 3.77-3.88 1.09 0 2.23.2 2.23.2v2.45h-1.25c-1.23 0-1.61.77-1.61 1.56v1.87h2.74l-.44 2.57h-2.3V21.9C18.34 21.13 22 17.04 22 12.07z"/></svg>
+                    </a>
+                    <!-- Instagram -->
+                    <a role="listitem" aria-label="Instagram" href="https://www.instagram.com/finjetofficial/" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5H7zm5 5.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5zm6.5-.9a1.1 1.1 0 1 1-1.1 1.1 1.1 1.1 0 0 1 1.1-1.1zM12 9.5A2.5 2.5 0 1 0 14.5 12 2.5 2.5 0 0 0 12 9.5z"/></svg>
+                    </a>
+                    <!-- WhatsApp -->
+                    <a role="listitem" aria-label="WhatsApp" href="https://wa.me/918714570666?text=to%20know%20more%20about%20Finjet%20services%20chat%20with%20our%20executive%20right%20now" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.52 3.48A11.95 11.95 0 0 0 12 0C5.37 0 .04 5.33.04 11.96c0 2.11.55 4.16 1.6 5.97L0 24l6.3-1.63a12 12 0 0 0 5.7 1.43c6.63 0 11.96-5.33 11.96-11.96 0-3.19-1.24-6.19-3.44-8.82zM12 21.6c-1.85 0-3.66-.5-5.24-1.45l-.37-.22-3.74.97.99-3.64-.24-.38A8.28 8.28 0 0 1 3.72 9.2 8.28 8.28 0 0 1 12 3.6c4.58 0 8.28 3.7 8.28 8.28S16.58 20.16 12 20.16zM16.27 14.6c-.26-.13-1.54-.76-1.78-.85-.24-.08-.41-.13-.58.13-.17.26-.65.85-.8 1.02-.15.17-.29.19-.55.06-.26-.13-1.1-.4-2.1-1.29-.78-.69-1.3-1.55-1.45-1.81-.15-.26-.02-.4.11-.53.11-.11.26-.29.39-.44.13-.15.17-.26.26-.43.09-.17.04-.32-.02-.45-.06-.13-.58-1.4-.79-1.92-.21-.5-.43-.43-.58-.44-.15-.01-.32-.01-.5-.01-.17 0-.45.06-.69.32-.24.26-.91.89-.91 2.17 0 1.28.93 2.52 1.06 2.69.13.17 1.85 2.88 4.48 3.93 2.63 1.05 2.63.7 3.1.66.47-.04 1.53-.62 1.75-1.22.22-.6.22-1.11.15-1.22-.07-.11-.26-.17-.52-.3z"/></svg>
+                    </a>
+                    <!-- Email -->
+                    <a role="listitem" aria-label="Email" href="mailto:info@finjet.com" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    </a>
+                </div>
+
+                <div class="footer-policy-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Use</a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Bottom bar -->
+        <div class="footer-bottom">
+            &copy; Finjet Corporate Advisors Pvt Ltd 2019
+        </div>
     </footer>
 
     <!-- Scripts -->
@@ -956,9 +983,7 @@
         (function(){
             const els = document.querySelectorAll('.slide-up-scroll, .feature-card, .service-card, .review-card, .logo-grid a');
             const obs = new IntersectionObserver((entries)=>{
-
                 entries.forEach(e=>{
-
                     if(e.isIntersecting) {
                         e.target.style.transform = 'translateY(0)';
                         e.target.style.opacity = '1';
