@@ -1552,7 +1552,7 @@
     // ── Animated counters ──
     function animateCounter(el) {
       const target = parseInt(el.dataset.target);
-      const suffix = target >= 98 ? '%' : target >= 1000 ? '+' : '+';
+      const suffix = el.dataset.suffix || '+';
       const duration = 1800;
       const step = target / (duration / 16);
       let current = 0;
