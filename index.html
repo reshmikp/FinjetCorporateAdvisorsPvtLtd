@@ -962,20 +962,32 @@
     /* ══════════════════════════════════════════
        FOOTER
     ══════════════════════════════════════════ */
+
+/* Add this new breakpoint */
+
+
+    
     .site-footer {
       background: var(--ink);
       border-top: 1px solid rgba(192,17,43,0.1);
-      padding: 64px 24px 0;
+      padding: 64px 24px 32px;
       font-size: 14px;
     }
 
-    .footer-inner {
+    @media (max-width: 768px) {
+  .footer-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+ 
       max-width: 1160px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 48px;
+     
     }
+
+        .footer-brand {
+    grid-column: 1 / -1;  /* full width on mobile */
+  }
     @media (max-width: 900px) { .footer-inner { grid-template-columns: repeat(2,1fr); gap: 32px; } }
     @media (max-width: 540px) { .footer-inner { grid-template-columns: 1fr; gap: 28px; } }
 
@@ -989,6 +1001,7 @@
     }
     .footer-brand .logo-wrap img {
       height: 48px;
+      width: auto;
       object-fit: contain;
       filter: brightness(0) invert(1);
       opacity: 0.85;
@@ -1052,7 +1065,7 @@
     .footer-bottom {
       max-width: 1160px;
       margin: 40px auto 0;
-      padding: 18px 0;
+      padding: 18px 24px;
       border-top: 1px solid var(--glass-border);
       display: flex;
       align-items: center;
@@ -1506,9 +1519,9 @@
       </div>
 
       <div class="footer-col">
-        <h6>Contact Us</h6>
+        <h6 >Contact Us</h6>
         <ul>
-          <li><a href="tel:+91963333644" style="color:#fff;font-weight:500">+91 963333644</a></li>
+          <li><a href="tel:+91963333644" style="color:#fff;font-weight:500">+91 96333339644</a></li>
           <li><a href="tel:+918714570666" style="color:#fff;font-weight:500">+91 8714570666</a></li>
           <li>Mon–Sat, 9:30 am – 5:30 pm</li>
           <li><a href="mailto:finjetloans@gmail.com"> finjetloans@gmail.com </a></li>
@@ -1527,7 +1540,7 @@
 
     </div>
 
-    <div class="footer-bottom section-wrap" style="padding-left:0;padding-right:0">
+    <div class="footer-bottom ">
       <p>&copy; <span id="yr"></span> Finjet Corporate Advisors Pvt Ltd. All rights reserved.</p>
       <div class="footer-legal">
         <a href="#">Privacy Policy</a>
