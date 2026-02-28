@@ -3,15 +3,12 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Finjet Corporate Advisors Private Limited </title>
-  <meta name="description" content="Get quick approvals on car loans,personal loans,any choice of loans with Finjet. We offer competitive interest rates and flexible repayment options to help you manage your expenses easily.">
-  <!-- <meta name="description" content="FinJet Corporate Advisors — India's top destination for car loans, personal loans, and business loans. Fast approvals, competitive rates."/> -->
-  <meta property="og:title" content="Finjet-Your perfect banking partner specially curated for Car Loans "/>
-  <meta property="og:description" content="Drive your dream car today! Offering quick approvals and flexible EMI options on new and used car loans across Kerala. Minimal documentation required."/>
-
+  <meta name="description" content="FinJet Corporate Advisors — India's top destination for car loans, personal loans, and business loans. Fast approvals, competitive rates."/>
+  <meta property="og:title" content="FinJet — Your Trust, Our Commitment"/>
+  <meta property="og:description" content="Compare loan offers from top banks and NBFCs. Get expert guidance, fast approvals, and the best rates."/>
+  <title>FinJet — Home</title>
 
   <!-- Premium Fonts -->
-  <link rel="icon" href="Home/FINJET LOGO ONLY.jpg" sizes="any">
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet"/>
@@ -962,32 +959,20 @@
     /* ══════════════════════════════════════════
        FOOTER
     ══════════════════════════════════════════ */
-
-/* Add this new breakpoint */
-
-
-    
     .site-footer {
       background: var(--ink);
       border-top: 1px solid rgba(192,17,43,0.1);
-      padding: 64px 24px 32px;
+      padding: 64px 24px 0;
       font-size: 14px;
     }
 
-    @media (max-width: 768px) {
-  .footer-inner {
-    grid-template-columns: 1fr 1fr;
-    gap: 28px;
- 
+    .footer-inner {
       max-width: 1160px;
       margin: 0 auto;
       display: grid;
-     
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
     }
-
-        .footer-brand {
-    grid-column: 1 / -1;  /* full width on mobile */
-  }
     @media (max-width: 900px) { .footer-inner { grid-template-columns: repeat(2,1fr); gap: 32px; } }
     @media (max-width: 540px) { .footer-inner { grid-template-columns: 1fr; gap: 28px; } }
 
@@ -1001,7 +986,6 @@
     }
     .footer-brand .logo-wrap img {
       height: 48px;
-      width: auto;
       object-fit: contain;
       filter: brightness(0) invert(1);
       opacity: 0.85;
@@ -1065,7 +1049,7 @@
     .footer-bottom {
       max-width: 1160px;
       margin: 40px auto 0;
-      padding: 18px 24px;
+      padding: 18px 0;
       border-top: 1px solid var(--glass-border);
       display: flex;
       align-items: center;
@@ -1139,7 +1123,7 @@
     <div class="hero-overlay"></div>
 
     <div class="hero-content">
-      <div class="hero-badge">India's Premier Loan Advisory</div>
+      <div class="hero-badge">🇮🇳 India's Premier Loan Advisory</div>
 
       <h1>Your Dream Car.<br/><em>Your Perfect Loan.</em></h1>
       <p>Compare offers from 12+ banks & NBFCs. Expert guidance, fast approvals, best rates.</p>
@@ -1148,25 +1132,26 @@
         <button class="btn-primary" onclick="document.getElementById('emi-section').scrollIntoView({behavior:'smooth'})">Calculate EMI</button>
         <button class="btn-ghost" onclick="document.getElementById('footer').scrollIntoView({behavior:'smooth'})">Talk to an Advisor</button>
       </div>
-<div class="hero-stats">
-  <div class="stat-item">
-    <span class="stat-num" data-target="5000" data-suffix="+">0</span>
-    <span class="stat-label">Loans Disbursed</span>
-  </div>  
-  <div class="stat-item">
-    <span class="stat-num" data-target="12" data-suffix="+">0</span>
-    <span class="stat-label">Banking Partners</span>
-  </div>
-  <div class="stat-item">
-    <span class="stat-num" data-target="98" data-suffix="%">0</span>
-    <span class="stat-label">% Satisfaction</span>
-  </div>
-  <div class="stat-item">
-    <span class="stat-num" data-target="6" data-suffix="+">0</span>
-    <span class="stat-label">Years of Excellence</span>
-  </div>
-</div>
-     
+
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-num" data-target="5000">0</span>
+          <span class="stat-label">Loans Disbursed</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num" data-target="12">0</span>
+          <span class="stat-label">Banking Partners</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num" data-target="98">0</span>
+          <span class="stat-label">% Satisfaction</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num" data-target="6">0</span>
+          <span class="stat-label">Years of Excellence</span>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ══ TRUST BAR ══ -->
@@ -1487,8 +1472,8 @@
 
       <div class="footer-brand">
         <div class="logo-wrap">
-          <img src="Home/FINJET LOGO AI-1.jpg" alt="FinJet Corporate Advisors" class="logo" onerror="this.style.display='none'; "/>
-          <!-- <div style="font-family:var(--font-display);font-size:28px;font-weight:700;color:#C0112B;margin-top:4px;">Finjet</div> -->
+          <img src="Home/FINJET LOGO AI-1.jpg" alt="FinJet" onerror="this.style.display='none'"/>
+          <div style="font-family:var(--font-display);font-size:28px;font-weight:700;color:#C0112B;margin-top:4px;">FinJet</div>
         </div>
         <p>India's premier destination for car loans, personal loans, and business finance. Your trust is our most valued asset.</p>
         <div class="social-links" style="margin-top:18px">
@@ -1519,12 +1504,11 @@
       </div>
 
       <div class="footer-col">
-        <h6 >Contact Us</h6>
+        <h6>Contact Us</h6>
         <ul>
-          <li><a href="tel:+91963333644" style="color:#fff;font-weight:500">+91 96333339644</a></li>
-          <li><a href="tel:+918714570666" style="color:#fff;font-weight:500">+91 8714570666</a></li>
+          <li><a href="tel:+919539577060" style="color:#fff;font-weight:500">+91 95395 77060</a></li>
           <li>Mon–Sat, 9:30 am – 5:30 pm</li>
-          <li><a href="mailto:finjetloans@gmail.com"> finjetloans@gmail.com </a></li>
+          <li><a href="mailto:info@finjet.com">info@finjet.com</a></li>
         </ul>
       </div>
 
@@ -1540,7 +1524,7 @@
 
     </div>
 
-    <div class="footer-bottom ">
+    <div class="footer-bottom section-wrap" style="padding-left:0;padding-right:0">
       <p>&copy; <span id="yr"></span> Finjet Corporate Advisors Pvt Ltd. All rights reserved.</p>
       <div class="footer-legal">
         <a href="#">Privacy Policy</a>
@@ -1566,7 +1550,7 @@
     // ── Animated counters ──
     function animateCounter(el) {
       const target = parseInt(el.dataset.target);
-      const suffix = el.dataset.suffix || '+';
+      const suffix = target >= 98 ? '%' : target >= 1000 ? '+' : '+';
       const duration = 1800;
       const step = target / (duration / 16);
       let current = 0;
