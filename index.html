@@ -9,7 +9,7 @@
   <meta property="og:description" content="Compare loan offers from top banks and NBFCs. Get expert guidance, fast approvals, and the best rates."/>
   <title>Finjet Corporate Advisors Private Limited</title>
 
-  <!-- Premium Fonts -->
+  <!-- Main Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet"/>
@@ -21,8 +21,7 @@
 
   <style>
     /* ══════════════════════════════════════════
-       DESIGN SYSTEM — LUXURY FINANCE
-       Tone: Refined dark premium with crimson gold
+       DESIGN
     ══════════════════════════════════════════ */
     :root {
       --crimson: #C0112B;
@@ -62,7 +61,7 @@
     a { color: inherit; text-decoration: none; }
     img { max-width: 100%; display: block; }
 
-    /* ══ Grain texture overlay ══ */
+    
     body::before {
       content: '';
       position: fixed;
@@ -85,7 +84,7 @@
       justify-content: space-between;
       padding: 0 36px;
       background: white;
-      /* background: rgba(255,255,255,0.96); */
+      
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       z-index: 100;
@@ -191,7 +190,7 @@
     }
 
     /* ══════════════════════════════════════════
-       HERO
+       HERO section-edits needed
     ══════════════════════════════════════════ */
     .hero-viewport {
       position: relative;
@@ -223,7 +222,7 @@
       z-index: 1;
     }
 
-    /* Decorative diagonal line */
+    
     .hero-overlay::after {
       content: '';
       position: absolute;
@@ -339,7 +338,7 @@
       transform: translateY(-2px);
     }
 
-    /* Stats bar */
+    /* statics vision */
     .hero-stats {
       display: flex;
       gap: 0;
@@ -516,7 +515,7 @@
     }
 
     /* ══════════════════════════════════════════
-       PARTNER MARQUEE
+       PARTNER VISUAL MARQUEE(NEEDED TO ADD MORE BANKS)
     ══════════════════════════════════════════ */
     .partners {
       padding: 70px 0;
@@ -1532,20 +1531,20 @@
     </div>
   </footer>
 
-  <!-- Bootstrap JS -->
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-    // ── Dynamic copyright year ──
+    
     document.getElementById('yr').textContent = new Date().getFullYear();
 
-    // ── Navbar scroll effect ──
+  
     const topbar = document.getElementById('topbar');
     window.addEventListener('scroll', () => {
       topbar.classList.toggle('scrolled', window.scrollY > 50);
     });
 
-    // ── Animated counters ──
+    
     function animateCounter(el) {
       const target = parseInt(el.dataset.target);
       const suffix = el.dataset.suffix || '+';
@@ -1570,7 +1569,7 @@
 
     document.querySelectorAll('.stat-num').forEach(el => statsObserver.observe(el));
 
-    // ── Scroll reveal ──
+    
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); }
@@ -1578,7 +1577,7 @@
     }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-    // ── EMI Calculator with Chart ──
+    // ── EMI Calculator JSS with Chart ──
     (function() {
       const loanSlider   = document.getElementById('loanSlider');
       const rateSlider   = document.getElementById('rateSlider');
@@ -1618,7 +1617,7 @@
         document.getElementById('totalInterestPill').textContent = fmt(totalInterest);
         document.getElementById('savingPill').textContent      = R + '%';
 
-        // Update chart
+        // Update
         if (emiChart) {
           emiChart.data.datasets[0].data = [P, totalInterest];
           emiChart.update('active');
@@ -1657,7 +1656,7 @@
       calculate();
     })();
 
-    // ── Reviews scroll navigation ──
+    
     function scrollReviews(dir) {
       const track = document.getElementById('reviewsTrack');
       track.scrollBy({ left: dir * 340, behavior: 'smooth' });
